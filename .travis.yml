@@ -1,4 +1,6 @@
 language: csharp
 solution: DeveMultiCompressor.sln
+before_install:
+  - sudo nuget update -self
 notifications:
   email: false
