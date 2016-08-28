@@ -32,10 +32,15 @@ namespace DeveMultiCompressor
         public CompressorFileInfo CompressFile(CompressorFileInfo input)
         {
             var arguments = _configStringFiller.FillString(_config.CompressorArguments, input);
-            _processRunner.RunProcess(CompressorDir, _config.CompressorExe, arguments);
-
             var outputFilePath = _configStringFiller.FillString(_config.CompressedOutputFile, input);
             var outputFileTotalPath = Path.Combine(CompressorDir, outputFilePath);
+
+            if (File.Exists(outputFileTotalPath))
+            {
+                File.Delete(outputFileTotalPath);
+            }
+            _processRunner.RunProcess(CompressorDir, _config.CompressorExe, arguments);
+
             return new CompressorFileInfo(outputFileTotalPath);
         }
     }

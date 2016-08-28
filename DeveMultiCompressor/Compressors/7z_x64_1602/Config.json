@@ -1,0 +1,5 @@
+{
+  "CompressorExe": "7za.exe",
+  "CompressorArguments": "a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1024m -mfb=273 -ms=on -mqs=on -sccUTF-8 -bb0 \"{inputfilewithoutextension}.7z\" \"{inputfilepath}\"",
+  "CompressedOutputFile": "{inputfilewithoutextension}.7z"
+}

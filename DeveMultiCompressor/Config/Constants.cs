@@ -12,5 +12,6 @@ namespace DeveMultiCompressor.Config
 
         public const string CompressorFolder = "Compressors";
         public const string PrecompressorFolder = "Precompressors";
+        public const string OutputDir = "Output";
     }
 }

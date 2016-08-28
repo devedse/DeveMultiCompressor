@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DeveMultiCompressor.Config;
+using System.IO;
 
 namespace DeveMultiCompressor
 {
@@ -21,6 +22,7 @@ namespace DeveMultiCompressor
 
         public void Go(CommandLineOptions options)
         {
+            var outputDir = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir);
             var allCompressors = _compressionFinderFactory.GetCompressors();
 
             var inputFile = new CompressorFileInfo(options.InputFile);
@@ -28,14 +30,23 @@ namespace DeveMultiCompressor
             if (options.UsePrecomp)
             {
                 var preCompressor = _compressionFinderFactory.GetPreCompressor();
-                inputFile.MoveToDirectory(preCompressor.CompressorDir);
+                var copiedFile = inputFile.CopyToDirectory(preCompressor.CompressorDir);
                 inputFile = preCompressor.CompressFile(inputFile);
+                copiedFile.Delete();
             }
-            
+
             foreach (var compressor in allCompressors)
             {
                 var newInputFile = inputFile.CopyToDirectory(compressor.CompressorDir);
-                compressor.CompressFile(newInputFile);
+                var outputFile = compressor.CompressFile(newInputFile);
+                outputFile.MoveToDirectory(outputDir);
+                newInputFile.Delete();
+            }
+
+            if (options.UsePrecomp)
+            {
+                //If we use precomp, delete the .pcf file
+                inputFile.Delete();
             }
         }
     }
