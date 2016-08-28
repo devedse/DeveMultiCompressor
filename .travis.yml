@@ -1,0 +1,4 @@
+language: csharp
+solution: DeveMultiCompressor.sln
+notifications:
+  email: false

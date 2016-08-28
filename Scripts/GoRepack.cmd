@@ -1,0 +1,1 @@
+"%~dp0..\packages\ILRepack.2.0.10\tools\ILRepack.exe" /out:"%~dp0Output\DeveMultiCompressor.exe" "%~dp0..\DeveMultiCompressor\bin\Release\DeveMultiCompressor.exe" "%~dp0..\DeveMultiCompressor\bin\Release\CommandLine.dll" "%~dp0..\DeveMultiCompressor\bin\Release\FSharp.Core.dll" "%~dp0..\DeveMultiCompressor\bin\Release\Newtonsoft.Json.dll"
