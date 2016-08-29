@@ -16,30 +16,30 @@ namespace DeveMultiCompressor
         private ILogger _logger;
         private ConfigStringFiller _configStringFiller;
         private ProcessRunner _processRunner;
-        private CompressorConfig _config;
+        private CompressorConfig _compressorConfig;
 
-        public Compressor(ILogger logger, ConfigStringFiller configStringFiller, ProcessRunner processRunner, string compressorDir)
+        public Compressor(ILogger logger, ConfigStringFiller configStringFiller, ProcessRunner processRunner, string compressorDir, CompressorConfig compressorConfig)
         {
             this._logger = logger;
             this._configStringFiller = configStringFiller;
             this._processRunner = processRunner;
             this.CompressorDir = compressorDir;
-
-            var configPath = Path.Combine(compressorDir, Constants.CompressorConfigFileName);
-            _config = JsonConvert.DeserializeObject<CompressorConfig>(File.ReadAllText(configPath));
+            this._compressorConfig = compressorConfig;
         }
 
         public CompressorFileInfo CompressFile(CompressorFileInfo input)
         {
-            var arguments = _configStringFiller.FillString(_config.CompressorArguments, input);
-            var outputFilePath = _configStringFiller.FillString(_config.CompressedOutputFile, input);
+            _logger.Write($"Compressing with {_compressorConfig.CompressorExe}");
+
+            var arguments = _configStringFiller.FillString(_compressorConfig.CompressorArguments, input);
+            var outputFilePath = _configStringFiller.FillString(_compressorConfig.CompressedOutputFile, input);
             var outputFileTotalPath = Path.Combine(CompressorDir, outputFilePath);
 
             if (File.Exists(outputFileTotalPath))
             {
                 File.Delete(outputFileTotalPath);
             }
-            _processRunner.RunProcess(CompressorDir, _config.CompressorExe, arguments);
+            _processRunner.RunProcess(CompressorDir, _compressorConfig.CompressorExe, arguments);
 
             return new CompressorFileInfo(outputFileTotalPath);
         }

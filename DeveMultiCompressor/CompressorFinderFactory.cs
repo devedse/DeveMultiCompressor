@@ -1,5 +1,6 @@
 ﻿using Devedse.DeveImagePyramid.Logging;
 using DeveMultiCompressor.Config;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,8 +30,14 @@ namespace DeveMultiCompressor
 
             foreach (var compressorDir in allCompressorDirectories)
             {
-                var compressor = new Compressor(_logger, _configStringFiller, _processRunner, compressorDir);
-                allCompressors.Add(compressor);
+                var configPath = Path.Combine(compressorDir, Constants.CompressorConfigFileName);
+                var configs = JsonConvert.DeserializeObject<List<CompressorConfig>>(File.ReadAllText(configPath));
+
+                foreach (var config in configs)
+                {
+                    var compressor = new Compressor(_logger, _configStringFiller, _processRunner, compressorDir, config);
+                    allCompressors.Add(compressor);
+                }
             }
 
             return allCompressors;
@@ -39,7 +46,11 @@ namespace DeveMultiCompressor
         public Compressor GetPreCompressor()
         {
             var precompressorDirectory = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.PrecompressorFolder);
-            var precompressor = new Compressor(_logger, _configStringFiller, _processRunner, precompressorDirectory);
+
+            var configPath = Path.Combine(precompressorDirectory, Constants.CompressorConfigFileName);
+            var config = JsonConvert.DeserializeObject<CompressorConfig>(File.ReadAllText(configPath));
+
+            var precompressor = new Compressor(_logger, _configStringFiller, _processRunner, precompressorDirectory, config);
             return precompressor;
         }
     }

@@ -29,11 +29,14 @@ namespace DeveMultiCompressor
 
             if (options.UsePrecomp)
             {
+                _logger.Write("Using precomp...");
                 var preCompressor = _compressionFinderFactory.GetPreCompressor();
                 var copiedFile = inputFile.CopyToDirectory(preCompressor.CompressorDir);
                 inputFile = preCompressor.CompressFile(inputFile);
                 copiedFile.Delete();
             }
+
+            _logger.Write("Starting actual compression...");
 
             foreach (var compressor in allCompressors)
             {
@@ -48,6 +51,8 @@ namespace DeveMultiCompressor
                 //If we use precomp, delete the .pcf file
                 inputFile.Delete();
             }
+
+            _logger.Write("Completed compression :)");
         }
     }
 }

@@ -22,6 +22,8 @@ namespace DeveMultiCompressor
         {
             Directory.SetCurrentDirectory(directoryToRunFrom);
 
+            _logger.Write($"Running command: {pathToExe} {arguments}");
+
             var psi = new ProcessStartInfo(pathToExe, arguments);
             var process = Process.Start(psi);
 
