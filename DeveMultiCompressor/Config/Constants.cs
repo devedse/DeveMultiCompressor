@@ -2,10 +2,10 @@
 {
     public static class Constants
     {
-        public const string CompressorConfigFileName = "Config.json";
+        public static string CompressorConfigFileName = "Config.json";
 
-        public const string CompressorFolder = "Compressors";
-        public const string PrecompressorFolder = "Precompressors";
-        public const string OutputDir = "Output";
+        public static string CompressorFolder = "Compressors";
+        public static string PrecompressorFolder = "Precompressors";
+        public static string OutputDir = "Output";
     }
 }

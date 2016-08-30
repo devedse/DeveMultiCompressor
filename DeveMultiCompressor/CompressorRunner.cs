@@ -5,7 +5,7 @@ using System.IO;
 
 namespace DeveMultiCompressor
 {
-    class CompressorRunner
+    public class CompressorRunner
     {
         private ILogger _logger;
         private CompressorFinderFactory _compressionFinderFactory;
@@ -59,7 +59,7 @@ namespace DeveMultiCompressor
                 }
 
                 outputFile.MoveToDirectory(outputDir);
-                _logger.Write($"File compressed to '{outputFile.FileName}'. Size: {outputFile.GetFileSize()}", color: ConsoleColor.Green);
+                _logger.Write($"File compressed to '{outputFile.FileName}'. Size: {outputFile.GetFileSize()}. Hash: {outputFile.GenerateHash()}", color: ConsoleColor.Green);
             }
 
             if (options.UsePrecomp)
