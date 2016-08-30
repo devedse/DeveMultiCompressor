@@ -52,9 +52,14 @@ namespace DeveMultiCompressor
                     {
                         throw new Exception($"Hash of decompressed file: '{decompressedFile.FullPath}': '{decompressedFileHash}' does not match has of input file: '{inputFile.FullPath}': '{hash}'.");
                     }
+                    else
+                    {
+                        _logger.Write($"File verified. Hash is equal to input file: {decompressedFileHash}", color: ConsoleColor.Green);
+                    }
                 }
 
                 outputFile.MoveToDirectory(outputDir);
+                _logger.Write($"File compressed to '{outputFile.FileName}'. Size: {outputFile.GetFileSize()}", color: ConsoleColor.Green);
             }
 
             if (options.UsePrecomp)

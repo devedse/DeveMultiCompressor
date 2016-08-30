@@ -79,6 +79,13 @@ namespace DeveMultiCompressor
             }
         }
 
+        public string GetFileSize()
+        {
+            var fileInfo = new FileInfo(FullPath);
+            var sizeInMb = fileInfo.Length / 1000.0 / 1000.0;
+            return $"{Math.Round(sizeInMb, 3)} MB";
+        }
+
         public void Delete()
         {
             File.Delete(FullPath);
