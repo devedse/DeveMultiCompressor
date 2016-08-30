@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace DeveMultiCompressor
 {
     public class CompressorFileInfo
     {
-        private string _path;
+        public string FullPath { get; private set; }
 
         public string DirectoryPath
         {
             get
             {
-                return Path.GetDirectoryName(_path);
+                return Path.GetDirectoryName(FullPath);
             }
         }
 
@@ -23,7 +20,7 @@ namespace DeveMultiCompressor
         {
             get
             {
-                return Path.GetFileNameWithoutExtension(_path);
+                return Path.GetFileNameWithoutExtension(FullPath);
             }
         }
 
@@ -31,7 +28,7 @@ namespace DeveMultiCompressor
         {
             get
             {
-                return Path.GetFileName(_path);
+                return Path.GetFileName(FullPath);
             }
         }
 
@@ -40,7 +37,7 @@ namespace DeveMultiCompressor
             if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException($"Path is null or empty, Path: {path}", nameof(path));
             if (!File.Exists(path)) throw new ArgumentException($"File with path '{path}' does not exist.");
 
-            this._path = path;
+            this.FullPath = path;
         }
 
         public void MoveToDirectory(string destinationDirectory)
@@ -51,8 +48,8 @@ namespace DeveMultiCompressor
             {
                 File.Delete(totalDestinationPath);
             }
-            File.Move(_path, totalDestinationPath);
-            _path = totalDestinationPath;
+            File.Move(FullPath, totalDestinationPath);
+            FullPath = totalDestinationPath;
         }
 
         public CompressorFileInfo CopyToDirectory(string destinationDirectory)
@@ -63,13 +60,28 @@ namespace DeveMultiCompressor
             {
                 File.Delete(totalDestinationPath);
             }
-            File.Copy(_path, totalDestinationPath);
+            File.Copy(FullPath, totalDestinationPath);
             return new CompressorFileInfo(totalDestinationPath);
+        }
+
+        public string GenerateHash()
+        {
+            //Using SHA256 would be best because it's 4x as fast as 512. Also using Managed is like 10% slower then the SHA256CryptoServiceProvider, but this one works on all systems. (Not only XP with SP3+)
+            //However we use SHA1, because almost everyone uses it and its easier to do manual verification too.
+            using (var sha = SHA1Managed.Create())
+            {
+                using (var filestream = new FileStream(FullPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    byte[] hashValue = sha.ComputeHash(filestream);
+                    var hashResult = BitConverter.ToString(hashValue).Replace("-", string.Empty);
+                    return hashResult;
+                }
+            }
         }
 
         public void Delete()
         {
-            File.Delete(_path);
+            File.Delete(FullPath);
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿using Devedse.DeveImagePyramid.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DeveMultiCompressor.Config;
 using System.IO;
 
@@ -37,13 +33,28 @@ namespace DeveMultiCompressor
             }
 
             _logger.Write("Starting actual compression...");
+            _logger.Write($"Handling input file: '{options.InputFile}'. Generating hash...");
+            var hash = inputFile.GenerateHash();
+            _logger.Write($"Generated hash of input file: {hash}");
 
             foreach (var compressor in allCompressors)
             {
                 var newInputFile = inputFile.CopyToDirectory(compressor.CompressorDir);
                 var outputFile = compressor.CompressFile(newInputFile);
-                outputFile.MoveToDirectory(outputDir);
                 newInputFile.Delete();
+
+                if (options.Verify)
+                {
+                    var expectedPath = newInputFile.FullPath;
+                    var decompressedFile = compressor.DecompressFile(outputFile, expectedPath);
+                    var decompressedFileHash = decompressedFile.GenerateHash();
+                    if (hash != decompressedFileHash)
+                    {
+                        throw new Exception($"Hash of decompressed file: '{decompressedFile.FullPath}': '{decompressedFileHash}' does not match has of input file: '{inputFile.FullPath}': '{hash}'.");
+                    }
+                }
+
+                outputFile.MoveToDirectory(outputDir);
             }
 
             if (options.UsePrecomp)

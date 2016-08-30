@@ -2,6 +2,7 @@
   {
     "CompressorExe": "paq8pxd_v18.exe",
     "CompressorArguments": "-s11 \"{inputfilewithoutextension}\" \"{inputfilepath}\"",
-    "CompressedOutputFile": "{inputfilewithoutextension}.paq8pxd18"
+    "CompressedOutputFile": "{inputfilewithoutextension}.paq8pxd18",
+    "DecompressArguments": "-d \"{inputfilepath}\""
   }
 ]

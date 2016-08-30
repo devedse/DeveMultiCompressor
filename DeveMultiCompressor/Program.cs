@@ -1,16 +1,8 @@
 ﻿using CommandLine;
 using Devedse.DeveImagePyramid.Logging;
-using Devedse.DeveImagePyramid.Logging.Appenders;
 using DeveMultiCompressor.Config;
 using DryIoc;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace DeveMultiCompressor
 {
@@ -18,9 +10,6 @@ namespace DeveMultiCompressor
     {
         static int Main(string[] args)
         {
-
-
-
             using (var container = DryContainer.CreateDryContainer())
             {
                 var compressorRunner = container.Resolve<CompressorRunner>();

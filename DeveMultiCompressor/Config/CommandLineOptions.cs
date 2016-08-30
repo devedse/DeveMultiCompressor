@@ -1,9 +1,4 @@
 ﻿using CommandLine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeveMultiCompressor.Config
 {
@@ -14,5 +9,8 @@ namespace DeveMultiCompressor.Config
 
         [Option(HelpText = "Precompresses all files before compressing them.")]
         public bool UsePrecomp { get; set; }
+
+        [Option(HelpText = "Unpacks the archive afterwards and compares the recreated file hash with the input file.")]
+        public bool Verify { get; set; }
     }
 }
