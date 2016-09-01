@@ -23,6 +23,8 @@ namespace DeveMultiCompressor
             var process = Process.Start(psi);
 
             process.WaitForExit();
+
+            _logger.Write($"Exit code of command: {process.ExitCode}");
         } 
     }
 }

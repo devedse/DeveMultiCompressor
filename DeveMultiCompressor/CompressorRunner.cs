@@ -40,26 +40,34 @@ namespace DeveMultiCompressor
             foreach (var compressor in allCompressors)
             {
                 var newInputFile = inputFile.CopyToDirectory(compressor.CompressorDir);
-                var outputFile = compressor.CompressFile(newInputFile);
-                newInputFile.Delete();
 
-                if (options.Verify)
+                try
                 {
-                    var expectedPath = newInputFile.FullPath;
-                    var decompressedFile = compressor.DecompressFile(outputFile, expectedPath);
-                    var decompressedFileHash = decompressedFile.GenerateHash();
-                    if (hash != decompressedFileHash)
-                    {
-                        throw new Exception($"Hash of decompressed file: '{decompressedFile.FullPath}': '{decompressedFileHash}' does not match has of input file: '{inputFile.FullPath}': '{hash}'.");
-                    }
-                    else
-                    {
-                        _logger.Write($"File verified. Hash is equal to input file: {decompressedFileHash}", color: ConsoleColor.Green);
-                    }
-                }
+                    var outputFile = compressor.CompressFile(newInputFile);
+                    newInputFile.Delete();
 
-                outputFile.MoveToDirectory(outputDir);
-                _logger.Write($"File compressed to '{outputFile.FileName}'. Size: {outputFile.GetFileSize()}. Hash: {outputFile.GenerateHash()}", color: ConsoleColor.Green);
+                    if (options.Verify)
+                    {
+                        var expectedPath = newInputFile.FullPath;
+                        var decompressedFile = compressor.DecompressFile(outputFile, expectedPath);
+                        var decompressedFileHash = decompressedFile.GenerateHash();
+                        if (hash != decompressedFileHash)
+                        {
+                            throw new Exception($"Hash of decompressed file: '{decompressedFile.FullPath}': '{decompressedFileHash}' does not match has of input file: '{inputFile.FullPath}': '{hash}'.");
+                        }
+                        else
+                        {
+                            _logger.Write($"File verified. Hash is equal to input file: {decompressedFileHash}", color: ConsoleColor.Green);
+                        }
+                    }
+
+                    outputFile.MoveToDirectory(outputDir);
+                    _logger.Write($"File compressed to '{outputFile.FileName}'. Size: {outputFile.GetFileSize()}. Hash: {outputFile.GenerateHash()}", color: ConsoleColor.Green);
+                }
+                catch (Exception ex)
+                {
+                    _logger.WriteError($"Error occured when compressing with {compressor.CompressorDir}. Error: {ex.ToString()}");
+                }
             }
 
             if (options.UsePrecomp)
