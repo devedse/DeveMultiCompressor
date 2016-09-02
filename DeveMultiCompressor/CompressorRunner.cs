@@ -2,6 +2,7 @@
 using System;
 using DeveMultiCompressor.Config;
 using System.IO;
+using System.Linq;
 
 namespace DeveMultiCompressor
 {
@@ -16,7 +17,7 @@ namespace DeveMultiCompressor
             this._compressionFinderFactory = compressorFinderFactory;
         }
 
-        public void Go(CommandLineOptions options)
+        public void GoCompress(CommandLineOptions options)
         {
             var outputDir = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir);
             var allCompressors = _compressionFinderFactory.GetCompressors();
@@ -77,6 +78,53 @@ namespace DeveMultiCompressor
             }
 
             _logger.Write("Completed compression :)");
+        }
+
+        public void GoDecompress(CommandLineOptions options)
+        {
+            var lastPathOfOutputDir = Path.GetFileNameWithoutExtension(options.InputFile);
+            var outputDir = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir, lastPathOfOutputDir);
+            var allCompressors = _compressionFinderFactory.GetCompressors();
+
+            var inputFile = new CompressorFileInfo(options.InputFile);
+
+            var inputFileExtension = Path.GetExtension(inputFile.FullPath);
+            var validDecompressors = allCompressors.Where(t => string.Equals(inputFileExtension, "." + t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase) || string.Equals(inputFileExtension, t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            if (validDecompressors.Count == 0)
+            {
+                _logger.WriteError("No valid decompressor found, exiting...");
+                return;
+            }
+            if (validDecompressors.Count > 1)
+            {
+                _logger.Write($"Found {validDecompressors.Count} decompressors. Taking first.", LogLevel.Warning, ConsoleColor.Yellow);
+            }
+
+            var firstDecompressor = validDecompressors.First();
+
+            firstDecompressor.DecompressFileToDir(inputFile, outputDir);
+
+            if (options.UsePrecomp)
+            {
+                var precomp = _compressionFinderFactory.GetPreCompressor();
+
+                foreach (var file in Directory.GetFiles(outputDir))
+                {
+                    var extension = Path.GetExtension(file);
+                    if (string.Equals(extension, "." + precomp.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase) || string.Equals(extension, precomp.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase))
+                    {
+                        var precompFile = new CompressorFileInfo(file);
+                        var lastPartOfPrecompFile = Path.GetFileNameWithoutExtension(precompFile.FullPath);
+                        var outputDirPrecomp = Path.Combine(outputDir, lastPartOfPrecompFile);
+                        if (Directory.Exists(outputDirPrecomp))
+                        {
+                            _logger.Write($"Output directory '{outputDirPrecomp}' already exist. Possible file collisions...", LogLevel.Warning, ConsoleColor.Yellow);
+                        }
+                        precomp.DecompressFileToDir(precompFile, outputDirPrecomp);
+                    }
+                }
+            }
         }
     }
 }

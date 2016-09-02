@@ -38,7 +38,7 @@ namespace DeveMultiCompressorTests
                     Verify = true
                 };
 
-                runner.Go(commandLineOptions);
+                runner.GoCompress(commandLineOptions);
 
                 Assert.IsTrue(File.Exists(outputFileLzma2));
                 Assert.IsTrue(File.Exists(outputFileLzma));
@@ -80,7 +80,7 @@ namespace DeveMultiCompressorTests
                     Verify = true
                 };
 
-                runner.Go(commandLineOptions);
+                runner.GoCompress(commandLineOptions);
 
                 Assert.IsTrue(File.Exists(outputFileLzma2));
                 Assert.IsTrue(File.Exists(outputFileLzma));

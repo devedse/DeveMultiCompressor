@@ -4,8 +4,9 @@
     {
         Verbose = 1,
         Information = 2,
-        Error = 3,
-        Exception = 4,
-        LogAlways = 5
+        Warning = 3,
+        Error = 4,
+        Exception = 5,
+        LogAlways = 6
     }
 }

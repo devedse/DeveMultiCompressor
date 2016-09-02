@@ -6,5 +6,6 @@
         public string CompressorArguments { get; set; }
         public string CompressedOutputFile { get; set; }
         public string DecompressArguments { get; set; }
+        public string CompressedFileExtension { get; set; }
     }
 }

@@ -15,5 +15,21 @@ namespace DeveMultiCompressor
             string path = Uri.UnescapeDataString(uri.Path);
             return Path.GetDirectoryName(path);
         }
+
+        public static void ClearDirectory(string dir)
+        {
+            if (Directory.Exists(dir))
+            {
+                foreach (var file in Directory.GetFiles(dir))
+                {
+                    File.Delete(file);
+                }
+
+                foreach (var subDir in Directory.GetDirectories(dir))
+                {
+                    Directory.Delete(subDir, true);
+                }
+            }
+        }
     }
 }
