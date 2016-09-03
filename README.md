@@ -8,9 +8,9 @@ AppVeyor build:
 [![Build status](https://ci.appveyor.com/api/projects/status/c40u7g3kwhol8uk7?svg=true)](https://ci.appveyor.com/project/devedse/devemulticompressor)
 
 
-## Arguments
+## Arguments and usage
 
-The tool should be ran with the following arguments:
+The tool should be used with the following arguments:
 
 --decompress
 > If this is set, the program will try to decompress the file instead of compressing it.
@@ -29,7 +29,11 @@ The tool should be ran with the following arguments:
 
 --version
 > Display version information.
-	
+
+See the sample #SampleCompressEnwik6.cmd in downloaded package for a sample command.
+
+The output (created archives) will be written to a folder named "Output".
+
 ## Download
 
 The latest version is automatically build from the sources and can be found on the releases page:
