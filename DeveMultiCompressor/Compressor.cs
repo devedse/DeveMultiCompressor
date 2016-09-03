@@ -1,8 +1,6 @@
 ﻿using Devedse.DeveImagePyramid.Logging;
 using DeveMultiCompressor.Config;
 using System.IO;
-using System;
-using System.Threading;
 
 namespace DeveMultiCompressor
 {
