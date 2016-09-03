@@ -1,0 +1,9 @@
+[
+  {
+    "CompressorExe": "zpaq64.exe",
+    "CompressorArguments": "a \"{inputfilewithoutextension}\".zpaq \"{inputfilepath}\" -m5",
+    "CompressedOutputFile": "{inputfilewithoutextension}.zpaq",
+    "DecompressArguments": "x \"{inputfilepath}\"",
+    "CompressedFileExtension": "zpaq"
+  }
+]
