@@ -8,9 +8,9 @@ build:
 after_build:
 - cmd: Scripts\GoRepack.cmd
 artifacts:
-- path: Scripts\Output\DeveMultiCompressor.7z
+- path: Scripts\DeveMultiCompressor.7z
   name: droppackage7z
-- path: Scripts\Output\DeveMultiCompressor.zip
+- path: Scripts\DeveMultiCompressor.zip
   name: droppackagezip
 deploy:
 - provider: GitHub
