@@ -143,6 +143,7 @@ namespace DeveMultiCompressor
                             _logger.Write($"Output directory '{outputDirPrecomp}' already exist. Possible file collisions...", LogLevel.Warning, ConsoleColor.Yellow);
                         }
                         precomp.DecompressFileToDir(precompFile, outputDirPrecomp);
+                        //We could remove the .pcf file here, but I leave it just for clarity
                     }
                 }
             }
