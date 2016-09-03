@@ -13,22 +13,22 @@ AppVeyor build:
 The tool should be ran with the following arguments:
 
 --decompress
-	If this is set, the program will try to decompress the file instead of compressing it.
+> If this is set, the program will try to decompress the file instead of compressing it.
 
 --inputfile
-	Required. The path to the input file to compress.
+> Required. The path to the input file to compress.
 
 --useprecomp
-	Precompresses all files before compressing them. (When compressing, first precomp the files. When decompressing, extract all .pcf files).
+> Precompresses all files before compressing them. (When compressing, first precomp the files. When decompressing, extract all .pcf files).
 
 --verify
-	Unpacks the archive afterwards and compares the recreated file hash with the input file. (Only for compressing).
+> Unpacks the archive afterwards and compares the recreated file hash with the input file. (Only for compressing).
 
 --help
-	Display this help screen.
+> Display this help screen.
 
 --version
-	Display version information.
+> Display version information.
 	
 ## Download
 
