@@ -4,6 +4,9 @@ del "%~dp0DeveMultiCompressor.zip"
 
 "%~dp0..\packages\ILRepack.2.0.11\tools\ILRepack.exe" /out:"%~dp0Output\DeveMultiCompressor.exe" "%~dp0..\DeveMultiCompressor\bin\Release\DeveMultiCompressor.exe" "%~dp0..\DeveMultiCompressor\bin\Release\CommandLine.dll" "%~dp0..\DeveMultiCompressor\bin\Release\FSharp.Core.dll" "%~dp0..\DeveMultiCompressor\bin\Release\Newtonsoft.Json.dll"
 
+cd "%~dp0Output"
+dir
+
 xcopy "%~dp0..\DeveMultiCompressor\bin\Release\Compressors" "Output\Compressors\" /e /y
 xcopy "%~dp0..\DeveMultiCompressor\bin\Release\Precompressors" "Output\Precompressors\" /e /y
 
