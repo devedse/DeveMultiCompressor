@@ -24,6 +24,10 @@ namespace DeveMultiCompressor
 
             var inputFile = new CompressorFileInfo(options.InputFile);
 
+            _logger.Write($"Handling input file: '{options.InputFile}'. Generating hash...");
+            var hash = inputFile.GenerateHash();
+            _logger.Write($"Generated hash of input file: {hash}");
+
             if (options.UsePrecomp)
             {
                 _logger.Write("Using precomp...");
@@ -31,12 +35,29 @@ namespace DeveMultiCompressor
                 var copiedFile = inputFile.CopyToDirectory(preCompressor.CompressorDir);
                 inputFile = preCompressor.CompressFile(inputFile);
                 copiedFile.Delete();
+
+                if (options.Verify)
+                {
+                    var expectedPath = copiedFile.FullPath;
+                    var decompressedFile = preCompressor.DecompressFile(inputFile, expectedPath);
+                    var decompressedFileHash = decompressedFile.GenerateHash();
+                    if (hash != decompressedFileHash)
+                    {
+                        throw new Exception($"Hash of decompressed file (with precomp): '{decompressedFile.FullPath}': '{decompressedFileHash}' does not match has of input file: '{inputFile.FullPath}': '{hash}'.");
+                    }
+                    else
+                    {
+                        _logger.Write($"File verified (with precomp). Hash is equal to input file: {decompressedFileHash}", color: ConsoleColor.Green);
+                    }
+                }
+
+                _logger.Write($"Generating hash of precomp file: '{inputFile.FullPath}'...");
+                hash = inputFile.GenerateHash();
+                _logger.Write($"Generated hash of precomp input file: {hash}");
             }
 
             _logger.Write("Starting actual compression...");
-            _logger.Write($"Handling input file: '{options.InputFile}'. Generating hash...");
-            var hash = inputFile.GenerateHash();
-            _logger.Write($"Generated hash of input file: {hash}");
+
 
             foreach (var compressor in allCompressors)
             {
