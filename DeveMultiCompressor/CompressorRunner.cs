@@ -30,6 +30,8 @@ namespace DeveMultiCompressor
 
             if (options.UsePrecomp)
             {
+                //If we use precomp, the new inputFile will be the output of precomp
+
                 _logger.Write("Using precomp...");
                 var preCompressor = _compressionFinderFactory.GetPreCompressor();
                 var copiedFile = inputFile.CopyToDirectory(preCompressor.CompressorDir);
