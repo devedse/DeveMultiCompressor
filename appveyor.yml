@@ -16,4 +16,4 @@ deploy:
 - provider: GitHub
   auth_token:
     secure: CMLxtDi0SaeuWVHdknn/e+aHOvIy9DanPxnrSLEeuwia5RQ9RPwQ5qtkJ7x0DvJF
-  artifact: droppackage
+  artifact: droppackage7z,droppackagezip
