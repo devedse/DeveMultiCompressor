@@ -35,3 +35,9 @@ The output (created archives) will be written to a folder named "Output".
 
 The latest version is automatically build from the sources and can be found on the releases page:
 https://github.com/devedse/DeveMultiCompressor/releases
+
+## License
+
+All my own code is licensed under the "Unlicense" (See LICENSE file).
+
+Important note: additional exe's + dll's included in the Release/GIT repository (Compressors/Decompressors folder) might have different licenses then the rest of the csharp code. Please handle this according to their own licensing model.
