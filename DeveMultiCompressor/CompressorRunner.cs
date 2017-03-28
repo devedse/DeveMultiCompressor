@@ -19,12 +19,14 @@ namespace DeveMultiCompressor
 
         public void GoCompress(CommandLineOptions options)
         {
+            var inputFileFullPath = Path.GetFullPath(options.InputFile);
+
             var outputDir = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir);
             var allCompressors = _compressionFinderFactory.GetCompressors();
 
-            var inputFile = new CompressorFileInfo(options.InputFile);
+            var inputFile = new CompressorFileInfo(inputFileFullPath);
 
-            _logger.Write($"Handling input file: '{options.InputFile}'. Generating hash...");
+            _logger.Write($"Handling input file: '{inputFileFullPath}'. Generating hash...");
             var hash = inputFile.GenerateHash();
             _logger.Write($"Generated hash of input file: {hash}");
 
@@ -105,11 +107,13 @@ namespace DeveMultiCompressor
 
         public void GoDecompress(CommandLineOptions options)
         {
-            var lastPathOfOutputDir = Path.GetFileNameWithoutExtension(options.InputFile);
+            var inputFileFullPath = Path.GetFullPath(options.InputFile);
+
+            var lastPathOfOutputDir = Path.GetFileNameWithoutExtension(inputFileFullPath);
             var outputDir = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir, lastPathOfOutputDir);
             var allCompressors = _compressionFinderFactory.GetCompressors();
 
-            var inputFile = new CompressorFileInfo(options.InputFile);
+            var inputFile = new CompressorFileInfo(inputFileFullPath);
 
             var inputFileExtension = Path.GetExtension(inputFile.FullPath);
             var validDecompressors = allCompressors.Where(t => string.Equals(inputFileExtension, "." + t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase) || string.Equals(inputFileExtension, t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase)).ToList();
