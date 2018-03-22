@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Compressors\7z_x64_1602\Config.json">
+    <None Include="Compressors\7z_x64_1803\Config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Compressors\nanozip_009a\Config.json">
@@ -112,13 +112,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Compressors\7z_x64_1602\7za.dll">
+    <Content Include="Compressors\7z_x64_1803\7za.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Compressors\7z_x64_1602\7za.exe">
+    <Content Include="Compressors\7z_x64_1803\7za.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Compressors\7z_x64_1602\7zxa.dll">
+    <Content Include="Compressors\7z_x64_1803\7zxa.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Compressors\nanozip_009a\changes.txt">
