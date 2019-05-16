@@ -16,13 +16,15 @@ before_build:
   - choco install codecov
   - choco install xunit
   - choco install "msbuild-sonarqube-runner" -y
+  - choco install 7zip
 
 build_script:
   - cmd: dotnet build -c Release
   - cmd: dotnet publish DeveMultiCompressor\DeveMultiCompressor.csproj -c Release -r win10-x64
 
 after_build:
-  - ps: .\Scripts\GoRepack.ps1
+  #- ps: .\Scripts\GoRepack.ps1
+  - cmd: 7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "Scripts\Output\DeveMultiCompressor.7z" "DeveMultiCompressor\bin\Release\netcoreapp2.2\win10-x64\publish\"
 
 test_script:
   #- SonarScanner.MSBuild.exe begin /k:"DeveImageOptimizer" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=%sonarqubetoken% /d:sonar.cs.opencover.reportsPaths=".\DeveImageOptimizer.Coverage.xml" /d:sonar.coverage.exclusions="DeveImageOptimizer.ConsoleApp/**/*.cs,DeveImageOptimizer.Tests/**/*.cs"
@@ -31,12 +33,9 @@ test_script:
   #- SonarScanner.MSBuild.exe end /d:sonar.login=%sonarqubetoken%
   #- codecov -f "DeveImageOptimizer.Coverage.xml"
   - cmd: dotnet test -c Release
-  
-after_test:
-  - cmd: dotnet publish DeveMultiCompressor\DeveMultiCompressor.csproj -c Release -r win10-x64
 
 artifacts:
-  - path: Scripts\Output\*.exe
+  - path: Scripts\Output\*.7z
     name: droppackage
 
 deploy:

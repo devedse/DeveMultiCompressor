@@ -1,7 +1,8 @@
 $ErrorActionPreference = "Stop"
 
-$relativePathToReleaseFolder = '..\DeveMultiCompressor\bin\Release\netcoreapp2.2\win10-x64\publish'
-$relativePathToILRepackExe = '..\packages\ILMerge.3.0.29\tools\net452\ILMerge.exe'
+$relativePathToReleaseFolder = '..\DeveMultiCompressor\bin\Release\netcoreapp2.2\win10-x64\Publish'
+#$relativePathToILRepackExe = '..\packages\ILMerge.3.0.29\tools\net452\ILMerge.exe'
+$relativePathToILRepackExe = '..\packages\ILRepack.2.0.16\tools\ILRepack.exe'
 $fileNameOfPrimaryExe = 'DeveMultiCompressor.exe'
 $relativePathToOutputFolder = 'Output'
 
