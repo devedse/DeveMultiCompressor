@@ -19,6 +19,7 @@ before_build:
 
 build_script:
   - cmd: dotnet build -c Release
+  - cmd: dotnet publish DeveMultiCompressor\DeveMultiCompressor.csproj -c Release -r win10-x64
 
 after_build:
   - ps: .\Scripts\GoRepack.ps1
