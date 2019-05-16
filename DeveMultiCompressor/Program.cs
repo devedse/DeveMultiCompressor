@@ -1,29 +1,28 @@
 ﻿using CommandLine;
-using Devedse.DeveImagePyramid.Logging;
 using DeveMultiCompressor.Config;
+using DeveMultiCompressor.Lib;
+using DeveMultiCompressor.Lib.Logging;
 using DryIoc;
 using System;
 using System.Threading;
 
 namespace DeveMultiCompressor
 {
-    class Program
+    public class Program
     {
-        static int Main(string[] args)
+        public static int Main(string[] args)
         {
             using (var container = DryContainer.CreateDryContainer())
             {
                 var compressorRunner = container.Resolve<CompressorRunner>();
                 var logger = container.Resolve<ILogger>();
 
-                var result = CommandLine.Parser.Default.ParseArguments<CommandLineOptions>(args);
-                var exitCode = result
-                  .MapResult(
-                    options =>
+                var result = Parser.Default.ParseArguments<CommandLineOptions>(args);
+                var exitCode = result.MapResult(options =>
                     {
                         if (options.Decompress == false)
                         {
-                            compressorRunner.GoCompress(options);                            
+                            compressorRunner.GoCompress(options);
                         }
                         else
                         {
