@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="TestCompressors\7z_x64_1602\**" />
+    <EmbeddedResource Remove="TestCompressors\7z_x64_1602\**" />
+    <None Remove="TestCompressors\7z_x64_1602\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TestFiles\enwik6.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestFiles\enwik6.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DeveMultiCompressor.Lib\DeveMultiCompressor.Lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestCompressors\7z\7za.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCompressors\7z\7za.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCompressors\7z\7zxa.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestCompressors\7z\Config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
