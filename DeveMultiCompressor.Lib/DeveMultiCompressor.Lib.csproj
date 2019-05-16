@@ -11,12 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="$(SolutionDir)Precompressors\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Precompressors" />
-    <None Include="$(SolutionDir)compressors\**" CopyToOutputDirectory="PreserveNewest" LinkBase="compressors" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
+    <None Include="Precompressors\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Precompressors" />
+    <None Include="Compressors\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Compressors" />
   </ItemGroup>
 
 </Project>
