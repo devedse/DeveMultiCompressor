@@ -1,19 +1,45 @@
 version: 1.0.{build}
+os: Visual Studio 2017
 skip_tags: true
 configuration: Release
+
+# environment:
+#   sonarqubetoken:
+#     secure: ppdeirHI9dsM7NpQgtwIRqXbiqhJZvIyHxOFhnME5HhRFS6IbYZqRppQi7fTqv37
+
 before_build:
-- cmd: nuget restore
-build:
-  verbosity: minimal
+  - ps: .\scripts\set-version.ps1
+  - cmd: dotnet --info
+  - cmd: dotnet restore --verbosity n
+  - cmd: nuget restore
+  - choco install opencover.portable
+  - choco install codecov
+  - choco install xunit
+  - choco install "msbuild-sonarqube-runner" -y
+
+build_script:
+  - cmd: dotnet build -c Release
+
 after_build:
-- cmd: Scripts\GoRepack.cmd
+  - ps: .\Scripts\GoRepack.ps1
+
+test_script:
+  #- SonarScanner.MSBuild.exe begin /k:"DeveImageOptimizer" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=%sonarqubetoken% /d:sonar.cs.opencover.reportsPaths=".\DeveImageOptimizer.Coverage.xml" /d:sonar.coverage.exclusions="DeveImageOptimizer.ConsoleApp/**/*.cs,DeveImageOptimizer.Tests/**/*.cs"
+  #- cmd: dotnet build -c Release
+  #- OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test .\DeveImageOptimizer.Tests\DeveImageOptimizer.Tests.csproj -c Release --filter ShouldSkipForAppVeyor!=Yes" -oldstyle -returntargetcode -output:.\DeveImageOptimizer.Coverage.xml -filter:"+[DeveImageOptimizer*]* -[DeveImageOptimizer.Tests*]*"
+  #- SonarScanner.MSBuild.exe end /d:sonar.login=%sonarqubetoken%
+  #- codecov -f "DeveImageOptimizer.Coverage.xml"
+  - cmd: dotnet test -c Release
+  
+after_test:
+  - cmd: dotnet publish DeveMultiCompressor\DeveMultiCompressor.csproj -c Release -r win10-x64
+
 artifacts:
-- path: Scripts\DeveMultiCompressor.7z
-  name: droppackage7z
-- path: Scripts\DeveMultiCompressor.zip
-  name: droppackagezip
+  - path: Scripts\Output\*.exe
+    name: droppackage
+
 deploy:
 - provider: GitHub
   auth_token:
     secure: do7S++r1rE5E3IZujCoMONsWYJNF7eoRoPyJbxSD851I850OlEq0gsHH/Tji7o00
-  artifact: droppackage7z,droppackagezip
+  artifact: droppackage

@@ -1,1 +1,0 @@
-DeveMultiCompressor.exe --inputfile "#enwik6.txt" --useprecomp --verify
