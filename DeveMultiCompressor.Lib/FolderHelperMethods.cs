@@ -6,14 +6,13 @@ namespace DeveMultiCompressor.Lib
 {
     public static class FolderHelperMethods
     {
-        public static Lazy<string> AssemblyDirectory = new Lazy<string>(() => CreateAssemblyDirectory());
+        public static Lazy<string> AssemblyDirectory { get; } = new Lazy<string>(() => CreateLocationOfImageProcessorAssemblyDirectory());
 
-        private static string CreateAssemblyDirectory()
+        private static string CreateLocationOfImageProcessorAssemblyDirectory()
         {
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            UriBuilder uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            return Path.GetDirectoryName(path);
+            var assembly = typeof(FolderHelperMethods).GetTypeInfo().Assembly;
+            var assemblyDir = Path.GetDirectoryName(assembly.Location);
+            return assemblyDir;
         }
 
         public static void ClearDirectory(string dir)
