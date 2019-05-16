@@ -1,8 +1,8 @@
 $ErrorActionPreference = "Stop"
 
-$relativePathToReleaseFolder = '..\DeveImageOptimizerWPF\bin\Release'
+$relativePathToReleaseFolder = '..\DeveMultiCompressor\bin\Release\netcoreapp2.2\win10-x64\publish'
 $relativePathToILRepackExe = '..\packages\ILMerge.3.0.29\tools\net452\ILMerge.exe'
-$fileNameOfPrimaryExe = 'DeveImageOptimizerWPF.exe'
+$fileNameOfPrimaryExe = 'DeveMultiCompressor.exe'
 $relativePathToOutputFolder = 'Output'
 
 $invocation = (Get-Variable MyInvocation).Value
@@ -24,7 +24,7 @@ Write-Host $ilrepackexe;
 
 $arguments = @();
 
-$arguments += "/lib:""C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7""";
+#$arguments += "/lib:""C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7""";
 $arguments += "/log";
 $arguments += "/out:""$($outputexe)""";
 $arguments += """$($deveimageoptimizerexe)""";
