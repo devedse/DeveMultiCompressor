@@ -24,7 +24,7 @@ build_script:
 
 after_build:
   #- ps: .\Scripts\GoRepack.ps1
-  - cmd: 7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "Scripts\Output\DeveMultiCompressor.7z" "DeveMultiCompressor\bin\Release\netcoreapp2.2\win10-x64\publish\"
+  - cmd: 7z a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 "Scripts\Output\DeveMultiCompressor.7z" "DeveMultiCompressor\bin\Release\netcoreapp2.2\win10-x64\publish\*"
 
 test_script:
   #- SonarScanner.MSBuild.exe begin /k:"DeveImageOptimizer" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=%sonarqubetoken% /d:sonar.cs.opencover.reportsPaths=".\DeveImageOptimizer.Coverage.xml" /d:sonar.coverage.exclusions="DeveImageOptimizer.ConsoleApp/**/*.cs,DeveImageOptimizer.Tests/**/*.cs"
