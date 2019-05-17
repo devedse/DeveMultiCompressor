@@ -1,4 +1,4 @@
-﻿using DeveMultiCompressor.Config;
+﻿using DeveMultiCompressor.Lib.Config;
 using DeveMultiCompressor.Lib.Logging;
 using System;
 using System.IO;
@@ -25,11 +25,14 @@ namespace DeveMultiCompressor.Lib
 
             var allCompressors = _compressionFinderFactory.GetCompressors();
 
-            if (options.IncludedCompressors.Any())
+            if (options.IncludedCompressors != null && options.IncludedCompressors.Any())
             {
                 allCompressors = allCompressors.Where(t => options.IncludedCompressors.Any(z => z.Equals(t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase))).ToList();
             }
-            allCompressors = allCompressors.Where(t => options.ExcludedCompressors.All(z => !z.Equals(t.CompressorConfig.CompressedFileExtension))).ToList();
+            if (options.ExcludedCompressors != null && options.ExcludedCompressors.Any())
+            {
+                allCompressors = allCompressors.Where(t => options.ExcludedCompressors.All(z => !z.Equals(t.CompressorConfig.CompressedFileExtension))).ToList();
+            }
 
             var inputFile = new CompressorFileInfo(inputFileFullPath);
 

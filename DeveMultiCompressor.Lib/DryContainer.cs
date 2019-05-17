@@ -1,4 +1,4 @@
-﻿using DeveMultiCompressor.Config;
+﻿using DeveMultiCompressor.Lib.Config;
 using DeveMultiCompressor.Lib.Logging;
 using DryIoc;
 using System;
@@ -8,11 +8,18 @@ namespace DeveMultiCompressor.Lib
 {
     public static class DryContainer
     {
-        public static Container CreateDryContainer()
+        public static Container CreateDryContainer(string compressorDirectory = Constants.DefaultCompressorFolder, string precompressorDirectory = Constants.DefaultPrecompressorFolder)
         {
             var container = new Container();
 
+            var compressorDirectoryConfig = new CompressorDirectoryConfiguration()
+            {
+                CompressorDirectory = compressorDirectory,
+                PrecompressorDirectory = precompressorDirectory
+            };
+
             container.RegisterInstance(container);
+            container.RegisterInstance(compressorDirectoryConfig);
             container.RegisterInstance<ILogger>(LoggerCreator.CreateLogger(false));
             container.Register<CompressorRunner>();
             container.Register<CompressorFinderFactory>(Reuse.Singleton);

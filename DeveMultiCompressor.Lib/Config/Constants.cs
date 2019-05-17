@@ -1,11 +1,11 @@
-﻿namespace DeveMultiCompressor.Config
+﻿namespace DeveMultiCompressor.Lib.Config
 {
     public static class Constants
     {
-        public static string CompressorConfigFileName = "Config.json";
+        public const string CompressorConfigFileName = "Config.json";
 
-        public static string CompressorFolder = "Compressors";
-        public static string PrecompressorFolder = "Precompressors";
-        public static string OutputDir = "Output";
+        public const string DefaultCompressorFolder = "Compressors";
+        public const string DefaultPrecompressorFolder = "Precompressors";
+        public const string OutputDir = "Output";
     }
 }

@@ -1,5 +1,5 @@
-using DeveMultiCompressor.Config;
 using DeveMultiCompressor.Lib;
+using DeveMultiCompressor.Lib.Config;
 using DryIoc;
 using System.IO;
 using Xunit;
@@ -11,13 +11,11 @@ namespace DeveMultiCompressor.Tests
         [Fact]
         public void CompressSimpleFile()
         {
-            Constants.CompressorFolder = "TestCompressors";
-
             var inputFile = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "TestFiles", "enwik6.txt");
             var outputFileLzma2 = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "Output", "enwik6_LZMA2.7z");
             var outputFileLzma = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "Output", "enwik6_LZMA.7z");
 
-            using (var container = DryContainer.CreateDryContainer())
+            using (var container = DryContainer.CreateDryContainer("TestCompressors"))
             {
                 var runner = container.Resolve<CompressorRunner>();
 
@@ -52,8 +50,6 @@ namespace DeveMultiCompressor.Tests
         [Fact]
         public void CompressSimpleFileRelativePath()
         {
-            Constants.CompressorFolder = "TestCompressors";
-
             var previousDirectory = Directory.GetCurrentDirectory();
             try
             {
@@ -64,7 +60,7 @@ namespace DeveMultiCompressor.Tests
                 var outputFileLzma2 = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "Output", "enwik6_LZMA2.7z");
                 var outputFileLzma = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "Output", "enwik6_LZMA.7z");
 
-                using (var container = DryContainer.CreateDryContainer())
+                using (var container = DryContainer.CreateDryContainer("TestCompressors"))
                 {
                     var runner = container.Resolve<CompressorRunner>();
 
@@ -104,13 +100,11 @@ namespace DeveMultiCompressor.Tests
         [Fact]
         public void CompressSimpleFileWithPrecomp()
         {
-            Constants.CompressorFolder = "TestCompressors";
-
             var inputFile = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "TestFiles", "enwik6.txt");
             var outputFileLzma2 = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir, "enwik6_LZMA2.7z");
             var outputFileLzma = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir, "enwik6_LZMA.7z");
 
-            using (var container = DryContainer.CreateDryContainer())
+            using (var container = DryContainer.CreateDryContainer("TestCompressors"))
             {
                 var runner = container.Resolve<CompressorRunner>();
 
@@ -146,8 +140,6 @@ namespace DeveMultiCompressor.Tests
         [Fact]
         public void CompressAndDecompressWithoutPrecomp()
         {
-            Constants.CompressorFolder = "TestCompressors";
-
             var inputFile = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "TestFiles", "enwik6.txt");
             var outputFileLzma2 = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir, "enwik6_LZMA2.7z");
             var outputFileLzma = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir, "enwik6_LZMA.7z");
@@ -155,7 +147,7 @@ namespace DeveMultiCompressor.Tests
             var inputFileInfo = new CompressorFileInfo(inputFile);
             var inputFileHash = inputFileInfo.GenerateHash();
 
-            using (var container = DryContainer.CreateDryContainer())
+            using (var container = DryContainer.CreateDryContainer("TestCompressors"))
             {
                 var runner = container.Resolve<CompressorRunner>();
 
@@ -224,8 +216,6 @@ namespace DeveMultiCompressor.Tests
         [Fact]
         public void CompressAndDecompressWithoutPrecompWithAllRelativePaths()
         {
-            Constants.CompressorFolder = "TestCompressors";
-
             var previousDirectory = Directory.GetCurrentDirectory();
             try
             {
@@ -239,7 +229,7 @@ namespace DeveMultiCompressor.Tests
                 var inputFileInfo = new CompressorFileInfo(inputFile);
                 var inputFileHash = inputFileInfo.GenerateHash();
 
-                using (var container = DryContainer.CreateDryContainer())
+                using (var container = DryContainer.CreateDryContainer("TestCompressors"))
                 {
                     var runner = container.Resolve<CompressorRunner>();
 
@@ -314,8 +304,6 @@ namespace DeveMultiCompressor.Tests
         [Fact]
         public void CompressAndDecompressWithPrecomp()
         {
-            Constants.CompressorFolder = "TestCompressors";
-
             var inputFile = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "TestFiles", "enwik6.txt");
             var outputFileLzma2 = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir, "enwik6_LZMA2.7z");
             var outputFileLzma = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir, "enwik6_LZMA.7z");
@@ -323,7 +311,7 @@ namespace DeveMultiCompressor.Tests
             var inputFileInfo = new CompressorFileInfo(inputFile);
             var inputFileHash = inputFileInfo.GenerateHash();
 
-            using (var container = DryContainer.CreateDryContainer())
+            using (var container = DryContainer.CreateDryContainer("TestCompressors"))
             {
                 var runner = container.Resolve<CompressorRunner>();
 

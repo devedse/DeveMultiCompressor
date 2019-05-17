@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using System.Collections.Generic;
 
-namespace DeveMultiCompressor.Config
+namespace DeveMultiCompressor.Lib.Config
 {
     public class CommandLineOptions
     {

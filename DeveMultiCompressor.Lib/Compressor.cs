@@ -1,4 +1,4 @@
-﻿using DeveMultiCompressor.Config;
+﻿using DeveMultiCompressor.Lib.Config;
 using DeveMultiCompressor.Lib.Logging;
 using System.IO;
 
@@ -7,10 +7,11 @@ namespace DeveMultiCompressor.Lib
     public class Compressor
     {
         public string CompressorDir { get; private set; }
+        public CompressorConfig CompressorConfig { get; private set; }
+
         private readonly ILogger _logger;
         private readonly ConfigStringFiller _configStringFiller;
         private readonly ProcessRunner _processRunner;
-        public CompressorConfig CompressorConfig { get; private set; }
 
         public Compressor(ILogger logger, ConfigStringFiller configStringFiller, ProcessRunner processRunner, string compressorDir, CompressorConfig compressorConfig)
         {

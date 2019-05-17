@@ -1,5 +1,5 @@
-﻿using DeveMultiCompressor.Config;
-using DeveMultiCompressor.Lib;
+﻿using DeveMultiCompressor.Lib;
+using DeveMultiCompressor.Lib.Config;
 using DryIoc;
 using System.IO;
 using Xunit;
@@ -11,8 +11,6 @@ namespace DeveMultiCompressor.Tests
         [Fact]
         public void AllCompressorsTest()
         {
-            Constants.CompressorFolder = "Compressors";
-
             var inputFile = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "TestFiles", "enwik5.txt");
 
             using (var container = DryContainer.CreateDryContainer())
