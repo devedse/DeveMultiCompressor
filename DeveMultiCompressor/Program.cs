@@ -1,6 +1,6 @@
 ﻿using CommandLine;
-using DeveMultiCompressor.Config;
 using DeveMultiCompressor.Lib;
+using DeveMultiCompressor.Lib.Config;
 using DeveMultiCompressor.Lib.Logging;
 using DryIoc;
 using System;
