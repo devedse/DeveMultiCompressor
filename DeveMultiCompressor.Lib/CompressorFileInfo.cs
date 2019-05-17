@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace DeveMultiCompressor.Lib
@@ -8,36 +9,38 @@ namespace DeveMultiCompressor.Lib
     {
         public string FullPath { get; private set; }
 
-        public string DirectoryPath
+        public string DirectoryPath => Path.GetDirectoryName(FullPath);
+
+        public string FileNameWithOneLessExtension
         {
             get
             {
-                return Path.GetDirectoryName(FullPath);
+                var fileName = FileName;
+                if (fileName.Contains('.'))
+                {
+                    return fileName.Substring(0, fileName.LastIndexOf('.'));
+                }
+                return FileNameWithoutExtension;
             }
         }
 
-        public string FileNameWithoutExtension
-        {
-            get
-            {
-                return Path.GetFileNameWithoutExtension(FullPath);
-            }
-        }
+        public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(FullPath);
 
-        public string FileName
-        {
-            get
-            {
-                return Path.GetFileName(FullPath);
-            }
-        }
+        public string FileName => Path.GetFileName(FullPath);
 
         public CompressorFileInfo(string path)
         {
-            if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException($"Path is null or empty, Path: {path}", nameof(path));
-            if (!File.Exists(path)) throw new ArgumentException($"File with path '{path}' does not exist.");
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                throw new ArgumentException($"Path is null or empty, Path: {path}", nameof(path));
+            }
 
-            this.FullPath = path;
+            if (!File.Exists(path))
+            {
+                throw new ArgumentException($"File with path '{path}' does not exist.");
+            }
+
+            FullPath = path;
         }
 
         public void MoveToDirectory(string destinationDirectory)
