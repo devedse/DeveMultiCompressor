@@ -8,7 +8,7 @@
   },
   {
     "CompressorExe": "nncp.exe",
-    "CompressorArguments": "c \"{inputfilepath}\" \"{inputfilewithoutextension}.nncp\"",
+    "CompressorArguments": "c \"{inputfilepath}\" \"{inputfilewithextension}.nncp\"",
     "CompressedOutputFile": "{inputfilewithextension}.nncp",
     "DecompressArguments": "d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
     "CompressedFileExtension": "nncp"
