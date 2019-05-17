@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DeveMultiCompressor": {
+      "commandName": "Project",
+      "commandLineArgs": "-i C:\\XGitPrivate\\DeveMultiCompressor\\DeveMultiCompressor.Tests\\TestFiles\\enwik5.txt -v --include 7z,nncp --exclude 7z"
+    }
+  }
+}

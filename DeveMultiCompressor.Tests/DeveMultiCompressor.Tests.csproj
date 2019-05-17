@@ -13,10 +13,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestFiles\enwik5.txt" />
     <None Remove="TestFiles\enwik6.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="TestFiles\enwik5.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestFiles\enwik6.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

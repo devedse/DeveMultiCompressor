@@ -22,7 +22,14 @@ namespace DeveMultiCompressor.Lib
             var inputFileFullPath = Path.GetFullPath(options.InputFile);
 
             var outputDir = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir);
+
             var allCompressors = _compressionFinderFactory.GetCompressors();
+
+            if (options.IncludedCompressors.Any())
+            {
+                allCompressors = allCompressors.Where(t => options.IncludedCompressors.Any(z => z.Equals(t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase))).ToList();
+            }
+            allCompressors = allCompressors.Where(t => options.ExcludedCompressors.All(z => !z.Equals(t.CompressorConfig.CompressedFileExtension))).ToList();
 
             var inputFile = new CompressorFileInfo(inputFileFullPath);
 

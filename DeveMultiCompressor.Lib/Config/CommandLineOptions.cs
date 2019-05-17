@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using System.Collections.Generic;
 
 namespace DeveMultiCompressor.Config
 {
@@ -15,5 +16,11 @@ namespace DeveMultiCompressor.Config
 
         [Option('v', "verify", HelpText = "Unpacks the archive afterwards and compares the recreated file hash with the input file. (Only for compressing).")]
         public bool Verify { get; set; }
+
+        [Option("include", HelpText = "Included compressors (List of archive extensions seperated by a comma, e.g.: nz,7z,zpaq).", Separator = ',')]
+        public IEnumerable<string> IncludedCompressors { get; set; }
+
+        [Option("exclude", HelpText = "Excluded compressors (List of archive extensions seperated by a comma, e.g.: nz,7z,zpaq).", Separator = ',')]
+        public IEnumerable<string> ExcludedCompressors { get; set; }
     }
 }

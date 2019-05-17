@@ -17,6 +17,8 @@ The tool should be used with the following arguments:
 | -i | --inputfile | Required. The path to the input file to compress. |
 | -p | --precomp | Precompresses all files before compressing them. (When compressing, first precomp the files. When decompressing, extract all .pcf files). |
 | -v | --verify | Unpacks the archive afterwards and compares the recreated file hash with the input file. (Only for compressing). |
+| | --include | Included compressors (List of archive extensions seperated by a comma, e.g.: nz,7z,zpaq). |
+| | --exclude | Excluded compressors (List of archive extensions seperated by a comma, e.g.: nz,7z,zpaq). |
 | | --help | Display the help screen. |
 | | --version | Display version information. |
 

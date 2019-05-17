@@ -1,0 +1,9 @@
+[
+  {
+    "CompressorExe": "nncp.exe",
+    "CompressorArguments": "-n_layer 7 -hidden_size 384 -n_embed_out 5 -n_symb 16388 -full_connect 1 -lr 6e-3 c \"{inputfilepath}\" \"{inputfilewithoutextension}.nncp\"",
+    "CompressedOutputFile": "{inputfilewithoutextension}.nncp",
+    "DecompressArguments": "d \"{inputfilepath}\"",
+    "CompressedFileExtension": "nncp"
+  }
+]
