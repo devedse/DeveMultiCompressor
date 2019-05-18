@@ -380,5 +380,24 @@ namespace DeveMultiCompressor.Tests
                 Assert.Equal(inputFileHash, compFileInfoLzma.GenerateHash());
             }
         }
+
+        [Fact]
+        public void AllCompressorsTest()
+        {
+            var inputFile = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, "TestFiles", "enwik5.txt");
+
+            using (var container = DryContainer.CreateDryContainer())
+            {
+                var runner = container.Resolve<CompressorRunner>();
+
+                var commandLineOptions = new CommandLineOptions()
+                {
+                    InputFile = inputFile,
+                    Verify = true
+                };
+
+                runner.GoCompress(commandLineOptions);
+            }
+        }
     }
 }
