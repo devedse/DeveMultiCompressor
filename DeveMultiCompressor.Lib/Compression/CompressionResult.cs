@@ -6,6 +6,7 @@ namespace DeveMultiCompressor.Lib.Compression
 {
     public class CompressionResult
     {
+        public bool Success { get; }
         public CompressorFileInfo CompressedFile { get; }
         public Compressor UsedCompressor { get; }
         public TimeSpan Duration { get; }
@@ -14,8 +15,9 @@ namespace DeveMultiCompressor.Lib.Compression
         public VerificationStatus VerificationStatus { get; set; }
         public TimeSpan DecompressionDuration { get; set; }
 
-        public CompressionResult(CompressorFileInfo compressedFile, Compressor usedCompressor, TimeSpan duration, long originalFileSize, long compressedFileSize)
+        public CompressionResult(bool success, CompressorFileInfo compressedFile, Compressor usedCompressor, TimeSpan duration, long originalFileSize, long compressedFileSize)
         {
+            Success = success;
             CompressedFile = compressedFile;
             UsedCompressor = usedCompressor;
             Duration = duration;
@@ -30,6 +32,7 @@ namespace DeveMultiCompressor.Lib.Compression
             {
                 UsedCompressor.CompressorConfig.CompressedFileExtension,
                 UsedCompressor.CompressorConfig.Description,
+                Success.ToString(),
                 ValuesToStringHelper.MiliSecondsToString((int)Duration.TotalMilliseconds),
                 ValuesToStringHelper.BytesToString(OriginalFileSize),
                 ValuesToStringHelper.BytesToString(CompressedFileSize),

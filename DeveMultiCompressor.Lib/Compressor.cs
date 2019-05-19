@@ -42,7 +42,8 @@ namespace DeveMultiCompressor.Lib
             w.Stop();
 
             var compressedFile = new CompressorFileInfo(outputFileTotalPath);
-            var result = new CompressionResult(compressedFile, this, w.Elapsed, input.FileSize, compressedFile.FileSize);
+            var success = File.Exists(outputFileTotalPath);
+            var result = new CompressionResult(success, compressedFile, this, w.Elapsed, input.FileSize, success ? compressedFile.FileSize : input.FileSize);
             return result;
         }
 

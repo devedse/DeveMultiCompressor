@@ -37,11 +37,6 @@ namespace DeveMultiCompressor.Lib.Compression
                 throw new ArgumentException($"Path is null or empty, Path: {path}", nameof(path));
             }
 
-            if (!File.Exists(path))
-            {
-                throw new ArgumentException($"File with path '{path}' does not exist.");
-            }
-
             FullPath = path;
         }
 
