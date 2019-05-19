@@ -3,5 +3,6 @@
   "CompressorArguments": "-cn \"{inputfilepath}\"",
   "CompressedOutputFile": "{inputfilewithoutextension}.pcf",
   "DecompressArguments": "-r \"{inputfilepath}\"",
-  "CompressedFileExtension": "pcf"
+  "CompressedFileExtension": "pcf",
+  "Description": "Precomp (-cn)"
 }
