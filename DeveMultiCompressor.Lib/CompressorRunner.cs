@@ -222,14 +222,14 @@ namespace DeveMultiCompressor.Lib
             sb.AppendLine($"Compression results for file {inputFileName}");
 
             var theLogList = new List<List<string>>();
-            theLogList.Add(new List<string>() { "Extension", "Description", "Success", "Duration", "Original File Size", "Compressed File Size", "Verification Status", "Decompression time" });
+            theLogList.Add(new List<string>() { "Extension", "Description", "Success", "Duration", "Original File Size", "Compressed File Size", "Compressed File Size (Bytes)", "Verification Status", "Decompression time" });
             theLogList.Add(null);
             if (preCompCompressionResult != null)
             {
                 theLogList.Add(preCompCompressionResult.ToStringList());
                 theLogList.Add(null);
             }
-            theLogList.AddRange(otherCompressionResults.Select(t => t.ToStringList()));
+            theLogList.AddRange(otherCompressionResults.OrderBy(t => t.CompressedFileSize).Select(t => t.ToStringList()));
 
             var outputString = TableToTextPrinter.TableToText(theLogList);
             sb.AppendLine(outputString);

@@ -22,7 +22,7 @@ namespace DeveMultiCompressor.Lib.Compression
             UsedCompressor = usedCompressor;
             Duration = duration;
             OriginalFileSize = originalFileSize;
-            CompressedFileSize = CompressedFileSize;
+            CompressedFileSize = compressedFileSize;
             VerificationStatus = VerificationStatus.NotVerified;
         }
 
@@ -36,6 +36,7 @@ namespace DeveMultiCompressor.Lib.Compression
                 ValuesToStringHelper.MiliSecondsToString((int)Duration.TotalMilliseconds),
                 ValuesToStringHelper.BytesToString(OriginalFileSize),
                 ValuesToStringHelper.BytesToString(CompressedFileSize),
+                CompressedFileSize.ToString(),
                 VerificationStatus.ToString(),
                 ValuesToStringHelper.MiliSecondsToString((int)DecompressionDuration.TotalMilliseconds)
             };
