@@ -4,6 +4,7 @@
     "CompressorArguments": "a \"{inputfilewithoutextension}\".zpaq \"{inputfilepath}\" -m5",
     "CompressedOutputFile": "{inputfilewithoutextension}.zpaq",
     "DecompressArguments": "x \"{inputfilepath}\"",
-    "CompressedFileExtension": "zpaq"
+    "CompressedFileExtension": "zpaq",
+    "Description": "zpaq (-m5)"
   }
 ]

@@ -4,6 +4,7 @@
     "CompressorArguments": "a -cc -m1500 \"{inputfilewithoutextension}.nz\" \"{inputfilepath}\"",
     "CompressedOutputFile": "{inputfilewithoutextension}.nz",
     "DecompressArguments": "x \"{inputfilepath}\"",
-    "CompressedFileExtension": "nz"
+    "CompressedFileExtension": "nz",
+    "Description": "NanoZip (-cc)"
   }
 ]

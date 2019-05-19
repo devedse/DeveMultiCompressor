@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 
-namespace DeveMultiCompressor.Lib
+namespace DeveMultiCompressor.Lib.Compression
 {
     public class CompressorFileInfo
     {
@@ -27,6 +27,8 @@ namespace DeveMultiCompressor.Lib
         public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(FullPath);
 
         public string FileName => Path.GetFileName(FullPath);
+
+        public long FileSize => new FileInfo(FullPath).Length;
 
         public CompressorFileInfo(string path)
         {
@@ -80,13 +82,6 @@ namespace DeveMultiCompressor.Lib
                     return hashResult;
                 }
             }
-        }
-
-        public string GetFileSize()
-        {
-            var fileInfo = new FileInfo(FullPath);
-            var sizeInMb = fileInfo.Length / 1000.0 / 1000.0;
-            return $"{Math.Round(sizeInMb, 3)} MB";
         }
 
         public void Delete()

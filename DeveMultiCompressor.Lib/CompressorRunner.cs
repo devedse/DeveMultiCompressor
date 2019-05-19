@@ -1,8 +1,14 @@
-﻿using DeveMultiCompressor.Lib.Config;
+﻿using DeveCoolLib.Conversion;
+using DeveCoolLib.TextFormatting;
+using DeveMultiCompressor.Lib.Compression;
+using DeveMultiCompressor.Lib.Config;
 using DeveMultiCompressor.Lib.Logging;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace DeveMultiCompressor.Lib
 {
@@ -19,6 +25,9 @@ namespace DeveMultiCompressor.Lib
 
         public void GoCompress(CommandLineOptions options)
         {
+            CompressionResult precompResult = null;
+            var allCompressionResults = new List<CompressionResult>();
+
             var inputFileFullPath = Path.GetFullPath(options.InputFile);
 
             var outputDir = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, Constants.OutputDir);
@@ -47,20 +56,30 @@ namespace DeveMultiCompressor.Lib
                 _logger.Write("Using precomp...");
                 var preCompressor = _compressionFinderFactory.GetPreCompressor();
                 var copiedFile = inputFile.CopyToDirectory(preCompressor.CompressorDir);
-                inputFile = preCompressor.CompressFile(inputFile);
+                precompResult = preCompressor.CompressFile(inputFile);
+                inputFile = precompResult.CompressedFile;
                 copiedFile.Delete();
 
                 if (options.Verify)
                 {
                     var expectedPath = copiedFile.FullPath;
+
+                    //TODO: Move this to DecompressFile Method just like it's done in the CompressFile method
+                    var w = Stopwatch.StartNew();
                     var decompressedFile = preCompressor.DecompressFile(inputFile, expectedPath);
+                    w.Stop();
+
                     var decompressedFileHash = decompressedFile.GenerateHash();
                     if (hash != decompressedFileHash)
                     {
-                        throw new Exception($"Hash of decompressed file (with precomp): '{decompressedFile.FullPath}': '{decompressedFileHash}' does not match has of input file: '{inputFile.FullPath}': '{hash}'.");
+                        precompResult.VerificationStatus = VerificationStatus.Failed;
+                        precompResult.DecompressionDuration = w.Elapsed;
+                        _logger.WriteError($"Hash of decompressed file (with precomp): '{decompressedFile.FullPath}': '{decompressedFileHash}' does not match has of input file: '{inputFile.FullPath}': '{hash}'.");
                     }
                     else
                     {
+                        precompResult.VerificationStatus = VerificationStatus.Success;
+                        precompResult.DecompressionDuration = w.Elapsed;
                         _logger.Write($"File verified (with precomp). Hash is equal to input file: {decompressedFileHash}", color: ConsoleColor.Green);
                     }
                 }
@@ -79,26 +98,37 @@ namespace DeveMultiCompressor.Lib
 
                 try
                 {
-                    var outputFile = compressor.CompressFile(newInputFile);
+                    var compressionResult = compressor.CompressFile(newInputFile);
+                    var outputFile = compressionResult.CompressedFile;
+
                     newInputFile.Delete();
 
                     if (options.Verify)
                     {
                         var expectedPath = newInputFile.FullPath;
+
+                        //TODO: Move this to DecompressFile Method just like it's done in the CompressFile method
+                        var w = Stopwatch.StartNew();
                         var decompressedFile = compressor.DecompressFile(outputFile, expectedPath);
+                        w.Stop();
+
                         var decompressedFileHash = decompressedFile.GenerateHash();
                         if (hash != decompressedFileHash)
                         {
-                            throw new Exception($"Hash of decompressed file: '{decompressedFile.FullPath}': '{decompressedFileHash}' does not match has of input file: '{inputFile.FullPath}': '{hash}'.");
+                            compressionResult.VerificationStatus = VerificationStatus.Failed;
+                            precompResult.DecompressionDuration = w.Elapsed;
+                            _logger.WriteError($"Hash of decompressed file: '{decompressedFile.FullPath}': '{decompressedFileHash}' does not match has of input file: '{inputFile.FullPath}': '{hash}'.");
                         }
                         else
                         {
+                            compressionResult.VerificationStatus = VerificationStatus.Success;
+                            precompResult.DecompressionDuration = w.Elapsed;
                             _logger.Write($"File verified. Hash is equal to input file: {decompressedFileHash}", color: ConsoleColor.Green);
                         }
                     }
 
                     outputFile.MoveToDirectory(outputDir);
-                    _logger.Write($"File compressed to '{outputFile.FileName}'. Size: {outputFile.GetFileSize()}. Hash: {outputFile.GenerateHash()}", color: ConsoleColor.Green);
+                    _logger.Write($"File compressed to '{outputFile.FileName}'. Size: {ValuesToStringHelper.BytesToString(outputFile.FileSize)}. Hash: {outputFile.GenerateHash()}", color: ConsoleColor.Green);
                 }
                 catch (Exception ex)
                 {
@@ -111,6 +141,10 @@ namespace DeveMultiCompressor.Lib
                 //If we use precomp, delete the .pcf file
                 inputFile.Delete();
             }
+
+
+            var logString = ToLogString(Path.GetFileName(inputFileFullPath), precompResult, allCompressionResults);
+            _logger.Write(logString);
 
             _logger.Write("Completed compression :)");
         }
@@ -163,6 +197,26 @@ namespace DeveMultiCompressor.Lib
                     }
                 }
             }
+        }
+
+        public string ToLogString(string inputFileName, CompressionResult preCompCompressionResult, List<CompressionResult> otherCompressionResults)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Compression results for file {inputFileName}");
+
+            var theLogList = new List<List<string>>();
+            theLogList.Add(new List<string>() { "Extension", "Description", "Duration", "Original File Size", "Compressed File Size", "Verification Status", "Decompression time" });
+            theLogList.Add(null);
+            if (preCompCompressionResult != null)
+            {
+                theLogList.Add(preCompCompressionResult.ToStringList());
+                theLogList.Add(null);
+            }
+            theLogList.AddRange(otherCompressionResults.Select(t => t.ToStringList()));
+
+            var outputString = TableToTextPrinter.TableToText(theLogList);
+            sb.AppendLine(outputString);
+            return sb.ToString();
         }
     }
 }

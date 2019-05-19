@@ -1,5 +1,7 @@
-﻿using DeveMultiCompressor.Lib.Config;
+﻿using DeveMultiCompressor.Lib.Compression;
+using DeveMultiCompressor.Lib.Config;
 using DeveMultiCompressor.Lib.Logging;
+using System.Diagnostics;
 using System.IO;
 
 namespace DeveMultiCompressor.Lib
@@ -22,7 +24,7 @@ namespace DeveMultiCompressor.Lib
             CompressorConfig = compressorConfig;
         }
 
-        public CompressorFileInfo CompressFile(CompressorFileInfo input)
+        public CompressionResult CompressFile(CompressorFileInfo input)
         {
             _logger.Write($"Compressing with {CompressorConfig.CompressorExe}");
 
@@ -35,9 +37,13 @@ namespace DeveMultiCompressor.Lib
             }
 
             var arguments = _configStringFiller.FillString(CompressorConfig.CompressorArguments, input);
+            var w = Stopwatch.StartNew();
             _processRunner.RunProcess(CompressorDir, CompressorConfig.CompressorExe, arguments);
+            w.Stop();
 
-            return new CompressorFileInfo(outputFileTotalPath);
+            var compressedFile = new CompressorFileInfo(outputFileTotalPath);
+            var result = new CompressionResult(compressedFile, this, w.Elapsed, input.FileSize, compressedFile.FileSize);
+            return result;
         }
 
         public CompressorFileInfo DecompressFile(CompressorFileInfo inputFile, string expectedOutputFilePath)

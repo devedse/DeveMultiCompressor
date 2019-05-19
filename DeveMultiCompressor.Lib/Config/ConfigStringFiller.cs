@@ -1,4 +1,6 @@
-﻿namespace DeveMultiCompressor.Lib.Config
+﻿using DeveMultiCompressor.Lib.Compression;
+
+namespace DeveMultiCompressor.Lib.Config
 {
     public class ConfigStringFiller
     {

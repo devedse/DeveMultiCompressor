@@ -4,13 +4,15 @@
     "CompressorArguments": "-n_layer 7 -hidden_size 384 -n_embed_out 5 -full_connect 1 -lr 6e-3 c \"{inputfilepath}\" \"{inputfilewithextension}.nncp\"",
     "CompressedOutputFile": "{inputfilewithextension}.nncp",
     "DecompressArguments": "d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
-    "CompressedFileExtension": "nncp"
+    "CompressedFileExtension": "nncp",
+    "Description": "Nncp (7 layers)"
   },
   {
     "CompressorExe": "nncp.exe",
     "CompressorArguments": "c \"{inputfilepath}\" \"{inputfilewithextension}.nncp\"",
     "CompressedOutputFile": "{inputfilewithextension}.nncp",
     "DecompressArguments": "d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
-    "CompressedFileExtension": "nncp"
+    "CompressedFileExtension": "nncp",
+    "Description": "Nncp (default)"
   }
 ]

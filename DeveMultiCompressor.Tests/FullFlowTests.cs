@@ -1,4 +1,5 @@
 using DeveMultiCompressor.Lib;
+using DeveMultiCompressor.Lib.Compression;
 using DeveMultiCompressor.Lib.Config;
 using DryIoc;
 using System.IO;
