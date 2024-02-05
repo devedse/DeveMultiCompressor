@@ -24,12 +24,19 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="DeveCoolLib" Version="1.0.571" />
-    <PackageReference Include="DryIoc" Version="5.4.3" />
+    <PackageReference Include="DryIoc.dll" Version="5.4.3" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Precompressors\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Precompressors" />
     <None Include="Compressors\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Compressors" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="C:\Users\davyd\.nuget\packages\dryioc\5.4.3\contentFiles\cs\netstandard2.0\DryIoc\Container.cs" />
+    <Compile Remove="C:\Users\davyd\.nuget\packages\dryioc\5.4.3\contentFiles\cs\netstandard2.0\DryIoc\Expression.cs" />
+    <Compile Remove="C:\Users\davyd\.nuget\packages\dryioc\5.4.3\contentFiles\cs\netstandard2.0\DryIoc\FastExpressionCompiler.cs" />
+    <Compile Remove="C:\Users\davyd\.nuget\packages\dryioc\5.4.3\contentFiles\cs\netstandard2.0\DryIoc\ImTools.cs" />
   </ItemGroup>
 
 </Project>
