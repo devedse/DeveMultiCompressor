@@ -1,12 +1,6 @@
 # DeveMultiCompressor
 A tool to compress files with multiple compressors to find out which one gives the best compression.
 
-## Build status
-
-| AppVeyor (Windows build) |
-|:------------------------:|
-| [![Build status](https://ci.appveyor.com/api/projects/status/c40u7g3kwhol8uk7?svg=true)](https://ci.appveyor.com/project/devedse/devemulticompressor) |
-
 ## Arguments and usage
 
 The tool should be used with the following arguments:
@@ -36,3 +30,35 @@ https://github.com/devedse/DeveMultiCompressor/releases
 All my own code is licensed under the "Unlicense" (See LICENSE file).
 
 Important note: additional exe's + dll's included in the Release/GIT repository (Compressors/Decompressors folder) might have different licenses then the rest of the csharp code. Please handle this according to their own licensing model.
+
+
+## Build status
+
+| GitHubActions Builds |
+|:--------------------:|
+| [![GitHubActions Builds](https://github.com/devedse/DeveMultiCompressor/workflows/GitHubActionsBuilds/badge.svg)](https://github.com/devedse/DeveMultiCompressor/actions/workflows/githubactionsbuilds.yml) |
+
+## DockerHub
+
+| Docker Hub |
+|:----------:|
+| [![Docker pulls](https://img.shields.io/docker/v/devedse/devemulticompressorweb)](https://hub.docker.com/r/devedse/devemulticompressorweb/) |
+| [![Docker pulls](https://img.shields.io/docker/v/devedse/devemulticompressormonogameblazor)](https://hub.docker.com/r/devedse/devemulticompressormonogameblazor/) |
+
+## Code Coverage Status
+
+| CodeCov |
+|:-------:|
+| [![codecov](https://codecov.io/gh/devedse/DeveMultiCompressor/branch/master/graph/badge.svg)](https://codecov.io/gh/devedse/DeveMultiCompressor) |
+
+## Code Quality Status
+
+| SonarQube |
+|:---------:|
+| [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=DeveMultiCompressor&metric=alert_status)](https://sonarcloud.io/dashboard?id=DeveMultiCompressor) |
+
+## Package
+
+| NuGet |
+|:-----:|
+| [![NuGet](https://img.shields.io/nuget/v/DeveMultiCompressor.svg)](https://www.nuget.org/packages/DeveMultiCompressor/) |
