@@ -66,7 +66,7 @@ jobs:
       run: |
         docker buildx build -f DeveMultiCompressor.ConsoleApp/Dockerfile --build-arg BUILD_VERSION=${{steps.tags.outputs.version}} --platform linux/arm64,linux/amd64 ${{steps.tags.outputs.tags}} ${{ (github.event_name != 'pull_request' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)) && '--push' || '' }} .
 
-        
+
   build_linux:
     needs: generate_version_number
     runs-on: ubuntu-latest
@@ -102,9 +102,9 @@ jobs:
       shell: bash
       run: |
         mkdir BuildOutputConsole
-        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishuntrimmed/DeveMazeGenerator.ConsoleApp ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.Untrimmed
-        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmed/DeveMazeGenerator.ConsoleApp ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.Trimmed
-        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmedaot/DeveMazeGenerator.ConsoleApp ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.TrimmedAot
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishuntrimmed/DeveMultiCompressor.ConsoleApp ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.Untrimmed
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmed/DeveMultiCompressor.ConsoleApp ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.Trimmed
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmedaot/DeveMultiCompressor.ConsoleApp ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.TrimmedAot
     - uses: actions/upload-artifact@v3
       with:
         name: DeveMultiCompressor.ConsoleApp
@@ -129,9 +129,9 @@ jobs:
       shell: bash
       run: |
         mkdir BuildOutputConsole
-        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishuntrimmed/DeveMazeGenerator.ConsoleApp.exe ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.Untrimmed.exe
-        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmed/DeveMazeGenerator.ConsoleApp.exe ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.Trimmed.exe
-        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmedaot/DeveMazeGenerator.ConsoleApp.exe ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.TrimmedAot.exe
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishuntrimmed/DeveMultiCompressor.ConsoleApp.exe ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.Untrimmed.exe
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmed/DeveMultiCompressor.ConsoleApp.exe ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.Trimmed.exe
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmedaot/DeveMultiCompressor.ConsoleApp.exe ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.TrimmedAot.exe
     - uses: actions/upload-artifact@v3
       with:
         name: DeveMultiCompressor.ConsoleApp
@@ -242,12 +242,12 @@ jobs:
           ./artifacts/DeveMultiCompressorZip/DeveMultiCompressor.zip
           ./artifacts/DeveMultiCompressorNuGet/*.nupkg
           ./artifacts/DeveMultiCompressorNuGet/*.snupkg
-          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.Untrimmed.exe
-          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.Trimmed.exe
-          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.TrimmedAot.exe
-          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.Untrimmed
-          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.Trimmed
-          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.TrimmedAot
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.Untrimmed.exe
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.Trimmed.exe
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.TrimmedAot.exe
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.Untrimmed
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.Trimmed
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.TrimmedAot
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

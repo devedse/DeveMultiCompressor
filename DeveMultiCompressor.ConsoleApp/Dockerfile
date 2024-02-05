@@ -20,4 +20,4 @@ RUN dotnet publish "DeveMultiCompressor.ConsoleApp.csproj" -c Release -o /app/pu
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DeveMazeGenerator.ConsoleApp.dll"]
+ENTRYPOINT ["dotnet", "DeveMultiCompressor.ConsoleApp.dll"]
