@@ -1,8 +1,8 @@
 ﻿using DeveMultiCompressor.Lib.Config;
 using DeveMultiCompressor.Lib.Logging;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 namespace DeveMultiCompressor.Lib
 {
@@ -29,7 +29,7 @@ namespace DeveMultiCompressor.Lib
             foreach (var compressorDir in allCompressorDirectories)
             {
                 var configPath = Path.Combine(compressorDir, Constants.CompressorConfigFileName);
-                var configs = JsonConvert.DeserializeObject<List<CompressorConfig>>(File.ReadAllText(configPath));
+                var configs = JsonSerializer.Deserialize<List<CompressorConfig>>(File.ReadAllText(configPath));
 
                 foreach (var config in configs)
                 {
@@ -46,7 +46,7 @@ namespace DeveMultiCompressor.Lib
             var precompressorDirectory = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, _compressorDirectoryConfiguration.PrecompressorDirectory);
 
             var configPath = Path.Combine(precompressorDirectory, Constants.CompressorConfigFileName);
-            var config = JsonConvert.DeserializeObject<CompressorConfig>(File.ReadAllText(configPath));
+            var config = JsonSerializer.Deserialize<CompressorConfig>(File.ReadAllText(configPath));
 
             var precompressor = new Compressor(_logger, _configStringFiller, _processRunner, precompressorDirectory, config);
             return precompressor;
