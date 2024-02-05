@@ -24,7 +24,7 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.5.0" />
     <PackageReference Include="DeveCoolLib" Version="1.0.6" />
-    <PackageReference Include="DryIoc" Version="4.0.4" />
+    <PackageReference Include="DryIoc" Version="5.4.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
