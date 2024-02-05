@@ -1,0 +1,10 @@
+[
+  {
+    "CompressorExe": "rz.exe",
+    "CompressorArguments": "a -d 1023m \"{inputfilewithoutextension}.rz\" \"{inputfilepath}\"",
+    "CompressedOutputFile": "{inputfilewithoutextension}.rz",
+    "DecompressArguments": "e \"{inputfilepath}\" *",
+    "CompressedFileExtension": "rz",
+    "Description": "rz"
+  }
+]

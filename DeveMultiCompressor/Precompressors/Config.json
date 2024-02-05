@@ -1,0 +1,8 @@
+{
+  "CompressorExe": "precomp64.exe",
+  "CompressorArguments": "-cn \"{inputfilepath}\"",
+  "CompressedOutputFile": "{inputfilewithoutextension}.pcf",
+  "DecompressArguments": "-r \"{inputfilepath}\"",
+  "CompressedFileExtension": "pcf",
+  "Description": "Precomp (-cn)"
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "CompressorExe": "nz64.exe",
+    "CompressorArguments": "a -cc -m1500 \"{inputfilewithoutextension}.nz\" \"{inputfilepath}\"",
+    "CompressedOutputFile": "{inputfilewithoutextension}.nz",
+    "DecompressArguments": "x \"{inputfilepath}\"",
+    "CompressedFileExtension": "nz",
+    "Description": "NanoZip (-cc)"
+  }
+]

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>DeveMultiCompressor.ConsoleApp</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>DeveMultiCompressorConsole</PackageId>
+    <TargetFramework>net8.0</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <TieredCompilationQuickJitForLoops>false</TieredCompilationQuickJitForLoops>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DeveMultiCompressor\DeveMultiCompressor.csproj" />
+  </ItemGroup>
+
+</Project>

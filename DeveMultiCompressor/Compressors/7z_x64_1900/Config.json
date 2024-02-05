@@ -1,0 +1,18 @@
+[
+  {
+    "CompressorExe": "7za.exe",
+    "CompressorArguments": "a -t7z -m0=LZMA2 -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 \"{inputfilewithoutextension}_LZMA2.7z\" \"{inputfilepath}\"",
+    "CompressedOutputFile": "{inputfilewithoutextension}_LZMA2.7z",
+    "DecompressArguments": "e \"{inputfilepath}\"",
+    "CompressedFileExtension": "7z",
+    "Description": "7z (LZMA2)"
+  },
+  {
+    "CompressorExe": "7za.exe",
+    "CompressorArguments": "a -t7z -m0=LZMA -mmt=on -mx9 -md=1536m -mfb=273 -ms=on -mqs=on -sccUTF-8 \"{inputfilewithoutextension}_LZMA.7z\" \"{inputfilepath}\"",
+    "CompressedOutputFile": "{inputfilewithoutextension}_LZMA.7z",
+    "DecompressArguments": "e \"{inputfilepath}\"",
+    "CompressedFileExtension": "7z",
+    "Description": "7z (LZMA)"
+  }
+]

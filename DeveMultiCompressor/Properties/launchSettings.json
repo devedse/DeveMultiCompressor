@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "DeveMultiCompressor": {
-      "commandName": "Project",
-      "commandLineArgs": "-i C:\\XGitPrivate\\DeveMultiCompressor\\DeveMultiCompressor.Tests\\TestFiles\\enwik5.txt -v"
-    }
-  }
-}

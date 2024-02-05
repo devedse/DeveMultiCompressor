@@ -1,17 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>1.0.0.0</Version>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>DeveMultiCompressor</AssemblyName>
+    <PackageId>DeveMultiCompressor</PackageId>
+    <Title>DeveMultiCompressor</Title>
+    <Authors>Devedse</Authors>
+    <Description>This is a tool to use multiple compressors and compare them to find out which tool has the best compression rate.</Description>
+    <PackageProjectUrl>https://github.com/devedse/DeveMultiCompressor</PackageProjectUrl>
+    <PackageTags>csharp;maze</PackageTags>
+
+    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+
+    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.5.0" />
+    <PackageReference Include="DeveCoolLib" Version="1.0.6" />
+    <PackageReference Include="DryIoc" Version="4.0.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeveMultiCompressor.Lib\DeveMultiCompressor.Lib.csproj" />
+    <None Include="Precompressors\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Precompressors" />
+    <None Include="Compressors\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Compressors" />
   </ItemGroup>
 
 </Project>

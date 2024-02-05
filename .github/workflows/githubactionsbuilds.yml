@@ -1,0 +1,369 @@
+name: GitHubActionsBuilds
+
+on: push
+
+jobs:
+  generate_version_number:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    outputs:
+      build_number: ${{ github.ref == 'refs/heads/master' && steps.buildnumber.outputs.build_number || 1 }}
+    steps:
+    - name: Generate build number
+      if: github.ref == 'refs/heads/master'
+      id: buildnumber
+      uses: onyxmueller/build-tag-number@v1
+      with:
+        token: ${{secrets.github_token}}
+
+  build_docker:
+    needs: generate_version_number
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: devedse
+        password: ${{ secrets.DOCKERHUBTOKEN }}
+    - name: Set up QEMU
+      id: qemu
+      uses: docker/setup-qemu-action@v2
+      with:
+        image: tonistiigi/binfmt:latest
+        platforms: all
+    - name: Available platforms
+      run: echo ${{ steps.qemu.outputs.platforms }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Builder instance name
+      run: echo ${{ steps.buildx.outputs.name }}
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+    - name: Set Image Tags
+      id: tags
+      run: |
+        VERSION=1.0.${{needs.generate_version_number.outputs.build_number}}
+        echo Version: $VERSION
+        echo github.ref: ${{ github.ref }}
+        echo github.actor: ${{ github.actor }}
+        echo branch name: ${GITHUB_REF#refs/heads/}
+        BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g')
+        echo parsed branch name: ${BRANCH_NAME}
+
+        echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+
+        if [[ "${{ github.ref }}" == 'refs/heads/master' ]]; then
+          echo "TAGS=-t devedse/devemulticompressorconsoleapp:${VERSION} -t devedse/devemulticompressorconsoleapp:latest" >> $GITHUB_OUTPUT
+        elif [[ "${{ github.actor }}" == 'dependabot[bot]' ]]; then
+          echo "TAGS=-t devedse/devemulticompressorconsoleapp:beta_${BRANCH_NAME}" >> $GITHUB_OUTPUT
+        else 
+          echo "TAGS=-t devedse/devemulticompressorconsoleapp:beta_${BRANCH_NAME} -t devedse/devemulticompressorconsoleapp:beta_nightly" >> $GITHUB_OUTPUT
+        fi
+    - name: Run Buildx
+      run: |
+        docker buildx build -f DeveMultiCompressor.ConsoleApp/Dockerfile --build-arg BUILD_VERSION=${{steps.tags.outputs.version}} --platform linux/arm64,linux/amd64 ${{steps.tags.outputs.tags}} ${{ (github.event_name != 'pull_request' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)) && '--push' || '' }} .
+
+
+  build_docker_monogame_blazor:
+    needs: generate_version_number
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: devedse
+        password: ${{ secrets.DOCKERHUBTOKEN }}
+    - name: Set up QEMU
+      id: qemu
+      uses: docker/setup-qemu-action@v2
+      with:
+        image: tonistiigi/binfmt:latest
+        platforms: all
+    - name: Available platforms
+      run: echo ${{ steps.qemu.outputs.platforms }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Builder instance name
+      run: echo ${{ steps.buildx.outputs.name }}
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+    - name: Set Image Tags
+      id: tags
+      run: |
+        VERSION=1.0.${{needs.generate_version_number.outputs.build_number}}
+        echo Version: $VERSION
+        echo github.ref: ${{ github.ref }}
+        echo github.actor: ${{ github.actor }}
+        echo branch name: ${GITHUB_REF#refs/heads/}
+        BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g')
+        echo parsed branch name: ${BRANCH_NAME}
+
+        echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+
+        if [[ "${{ github.ref }}" == 'refs/heads/master' ]]; then
+          echo "TAGS=-t devedse/devemulticompressormonogameblazor:${VERSION} -t devedse/devemulticompressormonogameblazor:latest" >> $GITHUB_OUTPUT
+        elif [[ "${{ github.actor }}" == 'dependabot[bot]' ]]; then
+          echo "TAGS=-t devedse/devemulticompressormonogameblazor:beta_${BRANCH_NAME}" >> $GITHUB_OUTPUT
+        else 
+          echo "TAGS=-t devedse/devemulticompressormonogameblazor:beta_${BRANCH_NAME} -t devedse/devemulticompressormonogameblazor:beta_nightly" >> $GITHUB_OUTPUT
+        fi
+    - name: Run Buildx
+      run: |
+        docker buildx build -f DeveMultiCompressor.MonoGame.Blazor/Dockerfile --build-arg BUILD_VERSION=${{steps.tags.outputs.version}} --platform linux/arm64,linux/amd64 ${{steps.tags.outputs.tags}} ${{ (github.event_name != 'pull_request' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)) && '--push' || '' }} .
+
+
+  build_linux:
+    needs: generate_version_number
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Install dependencies
+      run: dotnet restore DeveMultiCompressor.sln
+    - name: Build
+      run: dotnet build DeveMultiCompressor.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: Test
+      run: dotnet test DeveMultiCompressor.sln --no-restore --verbosity normal
+  
+  build_linux_consoleapp:
+    needs: generate_version_number
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Publish Untrimmed
+      run: dotnet publish DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj -c Release -r linux-x64 -o DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishuntrimmed/ /p:PublishSingleFile=true /p:SelfContained=true /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: Publish Trimmed
+      run: dotnet publish DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj -c Release -r linux-x64 -o DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmed/ /p:PublishSingleFile=true /p:SelfContained=true /p:PublishTrimmed=true /p:TrimMode=full /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: Publish Trimmed AOT
+      run: dotnet publish DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj -c Release -r linux-x64 -o DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmedaot/ /p:PublishTrimmed=true /p:TrimMode=full /p:PublishAot=true /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: Copy output
+      shell: bash
+      run: |
+        mkdir BuildOutputConsole
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishuntrimmed/DeveMazeGenerator.ConsoleApp ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.Untrimmed
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmed/DeveMazeGenerator.ConsoleApp ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.Trimmed
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmedaot/DeveMazeGenerator.ConsoleApp ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.TrimmedAot
+    - uses: actions/upload-artifact@v3
+      with:
+        name: DeveMultiCompressor.ConsoleApp
+        path: BuildOutputConsole/*
+
+  build_windows_consoleapp:
+    needs: generate_version_number
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Publish Untrimmed
+      run: dotnet publish DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj -c Release -r win-x64 -o DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishuntrimmed/ /p:PublishSingleFile=true /p:SelfContained=true /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: Publish Trimmed
+      run: dotnet publish DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj -c Release -r win-x64 -o DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmed/ /p:PublishSingleFile=true /p:SelfContained=true /p:PublishTrimmed=true /p:TrimMode=full /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: Publish Trimmed AOT
+      run: dotnet publish DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj -c Release -r win-x64 -o DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmedaot/ /p:PublishTrimmed=true /p:TrimMode=full /p:PublishAot=true /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: Copy output
+      shell: bash
+      run: |
+        mkdir BuildOutputConsole
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishuntrimmed/DeveMazeGenerator.ConsoleApp.exe ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.Untrimmed.exe
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmed/DeveMazeGenerator.ConsoleApp.exe ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.Trimmed.exe
+        mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmedaot/DeveMazeGenerator.ConsoleApp.exe ./BuildOutputConsole/DeveMazeGenerator.ConsoleApp.TrimmedAot.exe
+    - uses: actions/upload-artifact@v3
+      with:
+        name: DeveMultiCompressor.ConsoleApp
+        path: BuildOutputConsole/*.exe
+
+  build_windows:
+    needs: generate_version_number
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'zulu'
+        java-version: '19' # The JDK version to make available on the path.
+        java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+        architecture: x64 # (x64 or x86) - defaults to x64
+    - name: Install tools
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+        dotnet tool install --global dotnet-reportgenerator-globaltool
+    - name: Install dependencies
+      run: dotnet restore DeveMultiCompressor.sln
+    - name: SonarQube begin
+      if: github.actor != 'dependabot[bot]'
+      run: dotnet-sonarscanner begin /k:"DeveMultiCompressor" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=${{secrets.SONARQUBETOKEN}} /d:sonar.cs.opencover.reportsPaths=".\DeveMultiCompressor.Tests\TestResults\Coverage\coverage.opencover.xml" /d:sonar.coverage.exclusions="DeveMultiCompressor.ConsoleApp/**/*.cs,DeveMultiCompressor.Tests/**/*.cs"
+    - name: Build
+      run: dotnet build DeveMultiCompressor.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: Test
+      run: dotnet test DeveMultiCompressor.sln --verbosity normal --no-build -c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover
+    - name: SonarQube end
+      if: github.actor != 'dependabot[bot]'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet-sonarscanner end /d:sonar.login=${{secrets.SONARQUBETOKEN}}
+    - name: Pack
+      run: dotnet pack DeveMultiCompressor\DeveMultiCompressor.csproj --verbosity normal --no-build -c Release /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
+    - name: Run CodeCov
+      uses: codecov/codecov-action@v3
+      with:
+        directory: ./DeveMultiCompressor.Tests/TestResults
+        fail_ci_if_error: true # optional (default = false)
+        verbose: true # optional (default = false)
+
+    - name: Run GoPackage.ps1 script
+      run: .\Scripts\GoPackage.ps1
+      shell: pwsh
+
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: DeveMultiCompressor7z
+        path: ./Scripts/Output/DeveMultiCompressor.7z
+    - uses: actions/upload-artifact@v3
+      with:
+        name: DeveMultiCompressorZip
+        path: ./Scripts/Output/DeveMultiCompressor.zip
+    - uses: actions/upload-artifact@v3
+      with:
+        name: DeveMultiCompressorNuGet
+        path: |
+          ./DeveMultiCompressor/bin/Release/*.nupkg
+          ./DeveMultiCompressor/bin/Release/*.snupkg
+
+  release_github:
+    needs: [
+      generate_version_number,
+      build_windows_consoleapp,
+      build_linux_consoleapp,
+      build_windows,
+      build_linux,
+      build_docker]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v3
+      with:
+        path: ./artifacts/
+
+    - name: Display structure of downloaded files
+      run: |
+        cd ./artifacts/
+        ls -R
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+        release_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+        body: |
+          ${{ github.event.head_commit.message }}
+        draft: false
+        prerelease: false
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: 1.0.${{needs.generate_version_number.outputs.build_number}}
+        files: |
+          ./artifacts/DeveMultiCompressor7z/DeveMultiCompressor.7z
+          ./artifacts/DeveMultiCompressorZip/DeveMultiCompressor.zip
+          ./artifacts/DeveMultiCompressorNuGet/*.nupkg
+          ./artifacts/DeveMultiCompressorNuGet/*.snupkg
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.Untrimmed.exe
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.Trimmed.exe
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.TrimmedAot.exe
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.Untrimmed
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.Trimmed
+          ./artifacts/DeveMultiCompressor.ConsoleApp/DeveMazeGenerator.ConsoleApp.TrimmedAot
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  release_nuget:
+    needs: [generate_version_number, build_windows, build_linux, build_docker]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: DeveMultiCompressorNuGet
+        path: ./artifacts/DeveMultiCompressorNuGet/
+    - name: Push NuGet
+      run: dotnet nuget push ./artifacts/DeveMultiCompressorNuGet/DeveMultiCompressor.1.0.${{needs.generate_version_number.outputs.build_number}}.nupkg -k ${{ secrets.NUGETTOKEN }} -s https://api.nuget.org/v3/index.json
+
+  codeqlanalyze:
+    runs-on: windows-latest
+    needs: generate_version_number
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'csharp', 'javascript' ]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Install workload android
+      run: |
+        dotnet workload install android
+
+    - name: Run tree
+      run: tree /A
+
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+
+    # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+      with:
+        output: './artifacts'
+  
+    - name: Run tree2
+      run: |
+        tree /A
+        cd
+  
+    - uses: actions/upload-artifact@v3
+      with:
+        name: CodeQLAnalysis_${{ matrix.language }}
+        path: ./artifacts/${{ matrix.language }}.zip
