@@ -66,57 +66,7 @@ jobs:
       run: |
         docker buildx build -f DeveMultiCompressor.ConsoleApp/Dockerfile --build-arg BUILD_VERSION=${{steps.tags.outputs.version}} --platform linux/arm64,linux/amd64 ${{steps.tags.outputs.tags}} ${{ (github.event_name != 'pull_request' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)) && '--push' || '' }} .
 
-
-  build_docker_monogame_blazor:
-    needs: generate_version_number
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Login to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: devedse
-        password: ${{ secrets.DOCKERHUBTOKEN }}
-    - name: Set up QEMU
-      id: qemu
-      uses: docker/setup-qemu-action@v2
-      with:
-        image: tonistiigi/binfmt:latest
-        platforms: all
-    - name: Available platforms
-      run: echo ${{ steps.qemu.outputs.platforms }}
-    - name: Set up Docker Buildx
-      id: buildx
-      uses: docker/setup-buildx-action@v2
-    - name: Builder instance name
-      run: echo ${{ steps.buildx.outputs.name }}
-    - name: Available platforms
-      run: echo ${{ steps.buildx.outputs.platforms }}
-    - name: Set Image Tags
-      id: tags
-      run: |
-        VERSION=1.0.${{needs.generate_version_number.outputs.build_number}}
-        echo Version: $VERSION
-        echo github.ref: ${{ github.ref }}
-        echo github.actor: ${{ github.actor }}
-        echo branch name: ${GITHUB_REF#refs/heads/}
-        BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//-/g')
-        echo parsed branch name: ${BRANCH_NAME}
-
-        echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
-
-        if [[ "${{ github.ref }}" == 'refs/heads/master' ]]; then
-          echo "TAGS=-t devedse/devemulticompressormonogameblazor:${VERSION} -t devedse/devemulticompressormonogameblazor:latest" >> $GITHUB_OUTPUT
-        elif [[ "${{ github.actor }}" == 'dependabot[bot]' ]]; then
-          echo "TAGS=-t devedse/devemulticompressormonogameblazor:beta_${BRANCH_NAME}" >> $GITHUB_OUTPUT
-        else 
-          echo "TAGS=-t devedse/devemulticompressormonogameblazor:beta_${BRANCH_NAME} -t devedse/devemulticompressormonogameblazor:beta_nightly" >> $GITHUB_OUTPUT
-        fi
-    - name: Run Buildx
-      run: |
-        docker buildx build -f DeveMultiCompressor.MonoGame.Blazor/Dockerfile --build-arg BUILD_VERSION=${{steps.tags.outputs.version}} --platform linux/arm64,linux/amd64 ${{steps.tags.outputs.tags}} ${{ (github.event_name != 'pull_request' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)) && '--push' || '' }} .
-
-
+        
   build_linux:
     needs: generate_version_number
     runs-on: ubuntu-latest
