@@ -276,7 +276,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'csharp', 'javascript' ]
+        language: [ 'csharp' ]
 
     steps:
     - name: Checkout repository
@@ -286,9 +286,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    - name: Install workload android
-      run: |
-        dotnet workload install android
 
     - name: Run tree
       run: tree /A
