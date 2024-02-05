@@ -160,7 +160,7 @@ jobs:
       run: dotnet restore DeveMultiCompressor.sln
     - name: SonarQube begin
       if: github.actor != 'dependabot[bot]'
-      run: dotnet-sonarscanner begin /k:"DeveMultiCompressor" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=${{secrets.SONARQUBETOKEN}} /d:sonar.cs.opencover.reportsPaths=".\DeveMultiCompressor.Tests\TestResults\Coverage\coverage.opencover.xml" /d:sonar.coverage.exclusions="DeveMultiCompressor.ConsoleApp/**/*.cs,DeveMultiCompressor.Tests/**/*.cs"
+      run: dotnet-sonarscanner begin /k:"DeveMultiCompressor" /o:"devedse-github" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login=${{secrets.SONARQUBETOKEN}} /d:sonar.cs.opencover.reportsPaths=".\DeveMultiCompressor.Tests\TestResults\Coverage\coverage.opencover.xml" /d:sonar.coverage.exclusions="DeveMultiCompressor.ConsoleApp/**/*.cs,DeveMultiCompressor.Tests/**/*.cs,DeveMultiCompressor/Compressor/**/*.*"
     - name: Build
       run: dotnet build DeveMultiCompressor.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: Test
