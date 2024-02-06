@@ -8,14 +8,14 @@ $powerShellHelpersModule = Join-Path $directorypath "PowerShellHelpers"
 Import-Module -Name $powerShellHelpersModule
 
 $outputDir = Join-Path $directorypath "Output"
-$7zFilePath = Join-Path $outputDir "DeveMultiCompressorCore.7z"
-$zipFilePath = Join-Path $outputDir "DeveMultiCompressorCore.zip"
+$7zFilePath = Join-Path $outputDir "DeveMultiCompressor.7z"
+$zipFilePath = Join-Path $outputDir "DeveMultiCompressor.zip"
 
 DeleteFileIfExists $7zFilePath
 DeleteFileIfExists $zipFilePath
 DeleteFolderIfExists $outputDir
 
-$buildPath = Join-Path $solutionRoot "DeveMultiCompressorCore\bin\Release"
+$buildPath = Join-Path $solutionRoot "DeveMultiCompressor\bin\Release"
 
 # Exclude *.pdb files
 7z a -mm=Deflate -mfb=258 -mpass=15 "$zipFilePath" "$buildPath\*" '-x!*.pdb'
