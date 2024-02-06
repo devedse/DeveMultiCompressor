@@ -1,7 +1,7 @@
 [
   {
     "CompressorExe": "mcm.exe",
-    "CompressorArguments": "-x11 \"{inputfilepath}\" \"{inputfilewithextension}\".mcm",
+    "CompressorArguments": "-x11 \"{inputfilepath}\" \"{inputfilewithextension}.mcm\"",
     "CompressedOutputFile": "{inputfilewithextension}.mcm",
     "DecompressArguments": "d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
     "CompressedFileExtension": "mcm",

@@ -1,7 +1,7 @@
 [
   {
     "CompressorExe": "cmix.exe",
-    "CompressorArguments": "-c \"{inputfilepath}\" \"{inputfilewithextension}\".cmix20",
+    "CompressorArguments": "-c \"{inputfilepath}\" \"{inputfilewithextension}.cmix20\"",
     "CompressedOutputFile": "{inputfilewithextension}.cmix20",
     "DecompressArguments": "-d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
     "CompressedFileExtension": "cmix20",
