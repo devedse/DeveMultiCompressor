@@ -1,0 +1,10 @@
+[
+  {
+    "CompressorExe": "paq8hp12.exe",
+    "CompressorArguments": "-8 \"{inputfilewithoutextension}\" \"{inputfilepath}\"",
+    "CompressedOutputFile": "{inputfilewithoutextension}.paq8hp12",
+    "DecompressArguments": "-d \"{inputfilepath}\"",
+    "CompressedFileExtension": "paq8hp12",
+    "Description": "paq8hp12 (-8)"
+  }
+]
