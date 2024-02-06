@@ -1,10 +1,10 @@
 [
   {
     "CompressorExe": "paq8px_v208fix1.exe",
-    "CompressorArguments": "-12LT \"{inputfilewithoutextension}\" \"{inputfilepath}\"",
-    "CompressedOutputFile": "{inputfilewithoutextension}.paq8px_v208fix1",
-    "DecompressArguments": "-d \"{inputfilepath}\"",
-    "CompressedFileExtension": "paq8px_v208fix1",
-    "Description": "paq8px_v208fix1 (-12LT)"
+    "CompressorArguments": "-12LT \"{inputfilepath}\" \"{inputfilewithextension}.paq8px208fix1\"",
+    "CompressedOutputFile": "{inputfilewithextension}.paq8px208fix1",
+    "DecompressArguments": "-d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
+    "CompressedFileExtension": "paq8px208fix1",
+    "Description": "paq8px208fix1 (-12LT)"
   }
 ]
