@@ -1,0 +1,21 @@
+Proud to announce mcm v0.83 which has nice improvements in text:
+
+New features:
+2 pass approach: analyze then compress streams one at a time
+Dynamic dictionary preprocessor using 0 - 600000+ words depending on file.
+Special .wav compressor (not great ratio, but fast at >10MB/sec).
+
+New LZP idea for text, only use LZP if length is greater than ~13, otherwise use match model. This works better than never using LZP according to my tests.
+
+Sample results:
+calgary.tar -x9: 667,097 in 3s
+silesia -m9: 40,340,745 in 102s
+silesia -x9: 39,772,294 in 135s
+enwik8 -m9: 18,623,547 in 51s
+enwik8 -m9: 18,376,397 in 69s
+
+Future ideas:
+Is there a way to do a per sample CM to for audio samples? Logistic mixing makes no sense, but something like paq6 linear mixing might work. I want a way to have negative weights though.
+
+Caution:
+This version has a lot of changes and could be buggy. The dictionary building memory usage could be HUGE if the file is very large.

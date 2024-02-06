@@ -1,0 +1,10 @@
+[
+  {
+    "CompressorExe": "bsc.exe",
+    "CompressorArguments": "e \"{inputfilepath}\" \"{inputfilewithextension}\".bsc -b1000",
+    "CompressedOutputFile": "{inputfilewithextension}.bsc",
+    "DecompressArguments": "d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
+    "CompressedFileExtension": "bsc",
+    "Description": "bsc"
+  }
+]
