@@ -32,11 +32,4 @@
     <None Include="Compressors\**" CopyToOutputDirectory="PreserveNewest" LinkBase="Compressors" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="C:\Users\davyd\.nuget\packages\dryioc\5.4.3\contentFiles\cs\netstandard2.0\DryIoc\Container.cs" />
-    <Compile Remove="C:\Users\davyd\.nuget\packages\dryioc\5.4.3\contentFiles\cs\netstandard2.0\DryIoc\Expression.cs" />
-    <Compile Remove="C:\Users\davyd\.nuget\packages\dryioc\5.4.3\contentFiles\cs\netstandard2.0\DryIoc\FastExpressionCompiler.cs" />
-    <Compile Remove="C:\Users\davyd\.nuget\packages\dryioc\5.4.3\contentFiles\cs\netstandard2.0\DryIoc\ImTools.cs" />
-  </ItemGroup>
-
 </Project>

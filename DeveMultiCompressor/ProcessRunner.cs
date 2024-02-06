@@ -1,9 +1,9 @@
-﻿using DeveMultiCompressor.Lib.Logging;
+﻿using DeveMultiCompressor.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace DeveMultiCompressor.Lib
+namespace DeveMultiCompressor
 {
     public class ProcessRunner
     {

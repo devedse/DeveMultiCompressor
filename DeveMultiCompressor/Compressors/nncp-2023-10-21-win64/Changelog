@@ -1,0 +1,32 @@
+2023-10-21:
+
+- use a larger transformer model
+
+2021-06-01:
+
+- more hyperparameter tuning
+- preprocessor fixes
+
+2021-04-24:
+
+- use new LibNC library with CUDA and BF16 support
+- merged Transformer, LSTM and preprocessor into nncp
+- Transformer: added GEGLU activation
+- use integer-only operations in the preprocessor
+
+2019-11-16:
+
+- nncp: added the "-seg_len" option to specify the interval in symbols
+  between each parameter update
+- nncp: use rms_norm instead of layer_norm
+- trfcp: improved the positional encoding
+- trfcp: use GeLU instead of ReLU
+
+2019-06-29:
+
+- improved arithmetic coder
+
+2019-05-08:
+
+- nncp: added -n_embed_out parameter
+- preprocess: suppressed "/tmp/word1.txt" file

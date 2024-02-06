@@ -2,7 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 
-namespace DeveMultiCompressor.Lib.Compression
+namespace DeveMultiCompressor.Compression
 {
     public class CompressorFileInfo
     {

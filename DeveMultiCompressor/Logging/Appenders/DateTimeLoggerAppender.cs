@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DeveMultiCompressor.Lib.Logging.Appenders
+namespace DeveMultiCompressor.Logging.Appenders
 {
     public class DateTimeLoggerAppender : ILogger, IDisposable
     {

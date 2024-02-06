@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DeveMultiCompressor.Lib.Logging.Appenders
+namespace DeveMultiCompressor.Logging.Appenders
 {
     public class MultiLoggerAppender : ILogger, IDisposable
     {

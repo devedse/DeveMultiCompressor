@@ -1,4 +1,4 @@
-﻿namespace DeveMultiCompressor.Lib.Logging
+﻿namespace DeveMultiCompressor.Logging
 {
     public enum LogLevel
     {

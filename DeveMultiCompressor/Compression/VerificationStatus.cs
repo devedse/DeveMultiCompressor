@@ -1,4 +1,4 @@
-﻿namespace DeveMultiCompressor.Lib.Compression
+﻿namespace DeveMultiCompressor.Compression
 {
     public enum VerificationStatus
     {

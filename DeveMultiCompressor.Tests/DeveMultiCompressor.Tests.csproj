@@ -40,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeveMultiCompressor.Lib\DeveMultiCompressor.Lib.csproj" />
     <ProjectReference Include="..\DeveMultiCompressor\DeveMultiCompressor.csproj" />
   </ItemGroup>
 

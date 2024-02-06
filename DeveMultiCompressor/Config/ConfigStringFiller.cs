@@ -1,6 +1,6 @@
-﻿using DeveMultiCompressor.Lib.Compression;
+﻿using DeveMultiCompressor.Compression;
 
-namespace DeveMultiCompressor.Lib.Config
+namespace DeveMultiCompressor.Config
 {
     public class ConfigStringFiller
     {

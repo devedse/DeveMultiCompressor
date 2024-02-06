@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DeveMultiCompressor.Lib.Compression
+namespace DeveMultiCompressor.Compression
 {
     public class CompressionResult
     {

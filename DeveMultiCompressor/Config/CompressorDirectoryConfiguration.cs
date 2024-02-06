@@ -1,4 +1,4 @@
-﻿namespace DeveMultiCompressor.Lib.Config
+﻿namespace DeveMultiCompressor.Config
 {
     public class CompressorDirectoryConfiguration
     {

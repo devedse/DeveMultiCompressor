@@ -1,10 +1,10 @@
-﻿using DeveMultiCompressor.Lib.Config;
-using DeveMultiCompressor.Lib.Logging;
+﻿using DeveMultiCompressor.Config;
+using DeveMultiCompressor.Logging;
 using DryIoc;
 using System;
 using System.Linq;
 
-namespace DeveMultiCompressor.Lib
+namespace DeveMultiCompressor
 {
     public static class DryContainer
     {

@@ -1,5 +1,0 @@
-2019-05-08:
-
-- LibNC: faster matmul
-- nncp: added -n_embed_out parameter
-- preprocess: suppressed "/tmp/word1.txt" file

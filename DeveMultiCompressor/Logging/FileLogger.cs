@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace DeveMultiCompressor.Lib.Logging
+namespace DeveMultiCompressor.Logging
 {
     public class FileLogger : ILogger, IDisposable
     {

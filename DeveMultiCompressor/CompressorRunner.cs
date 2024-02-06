@@ -1,8 +1,8 @@
 ﻿using DeveCoolLib.Conversion;
 using DeveCoolLib.TextFormatting;
-using DeveMultiCompressor.Lib.Compression;
-using DeveMultiCompressor.Lib.Config;
-using DeveMultiCompressor.Lib.Logging;
+using DeveMultiCompressor.Compression;
+using DeveMultiCompressor.Config;
+using DeveMultiCompressor.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace DeveMultiCompressor.Lib
+namespace DeveMultiCompressor
 {
     public class CompressorRunner
     {

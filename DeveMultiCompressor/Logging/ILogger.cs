@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DeveMultiCompressor.Lib.Logging
+namespace DeveMultiCompressor.Logging
 {
     public interface ILogger
     {

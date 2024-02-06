@@ -1,10 +1,10 @@
-﻿using DeveMultiCompressor.Lib.Compression;
-using DeveMultiCompressor.Lib.Config;
-using DeveMultiCompressor.Lib.Logging;
+﻿using DeveMultiCompressor.Compression;
+using DeveMultiCompressor.Config;
+using DeveMultiCompressor.Logging;
 using System.Diagnostics;
 using System.IO;
 
-namespace DeveMultiCompressor.Lib
+namespace DeveMultiCompressor
 {
     public class Compressor
     {

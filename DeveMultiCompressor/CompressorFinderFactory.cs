@@ -1,10 +1,10 @@
-﻿using DeveMultiCompressor.Lib.Config;
-using DeveMultiCompressor.Lib.Logging;
+﻿using DeveMultiCompressor.Config;
+using DeveMultiCompressor.Logging;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace DeveMultiCompressor.Lib
+namespace DeveMultiCompressor
 {
     public class CompressorFinderFactory
     {

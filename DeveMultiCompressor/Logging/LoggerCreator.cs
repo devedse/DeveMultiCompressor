@@ -1,9 +1,9 @@
-﻿using DeveMultiCompressor.Lib.Logging.Appenders;
+﻿using DeveMultiCompressor.Logging.Appenders;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace DeveMultiCompressor.Lib.Logging
+namespace DeveMultiCompressor.Logging
 {
     public static class LoggerCreator
     {

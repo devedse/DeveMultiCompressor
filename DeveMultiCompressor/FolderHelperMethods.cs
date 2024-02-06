@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace DeveMultiCompressor.Lib
+namespace DeveMultiCompressor
 {
     public static class FolderHelperMethods
     {

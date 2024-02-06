@@ -1,12 +1,11 @@
 ﻿using CommandLine;
-using DeveMultiCompressor.Lib;
-using DeveMultiCompressor.Lib.Config;
-using DeveMultiCompressor.Lib.Logging;
+using DeveMultiCompressor.Config;
+using DeveMultiCompressor.Logging;
 using DryIoc;
 using System;
 using System.Threading;
 
-namespace DeveMultiCompressor
+namespace DeveMultiCompressor.ConsoleApp
 {
     public class Program
     {
