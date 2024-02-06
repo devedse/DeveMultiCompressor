@@ -113,7 +113,7 @@ jobs:
         mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishuntrimmed/DeveMultiCompressor.ConsoleApp ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.Untrimmed
         mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmed/DeveMultiCompressor.ConsoleApp ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.Trimmed
         mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmedaot/DeveMultiCompressor.ConsoleApp ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.TrimmedAot
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: DeveMultiCompressor.ConsoleApp
         path: BuildOutputConsole/*
@@ -140,7 +140,7 @@ jobs:
         mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishuntrimmed/DeveMultiCompressor.ConsoleApp.exe ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.Untrimmed.exe
         mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmed/DeveMultiCompressor.ConsoleApp.exe ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.Trimmed.exe
         mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmedaot/DeveMultiCompressor.ConsoleApp.exe ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.TrimmedAot.exe
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: DeveMultiCompressor.ConsoleApp
         path: BuildOutputConsole/*.exe
@@ -192,15 +192,15 @@ jobs:
       shell: pwsh
 
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: DeveMultiCompressor7z
         path: ./Scripts/Output/DeveMultiCompressor.7z
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: DeveMultiCompressorZip
         path: ./Scripts/Output/DeveMultiCompressor.zip
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: DeveMultiCompressorNuGet
         path: |
@@ -318,7 +318,7 @@ jobs:
         tree /A
         cd
   
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: CodeQLAnalysis_${{ matrix.language }}
         path: ./artifacts/${{ matrix.language }}.zip
