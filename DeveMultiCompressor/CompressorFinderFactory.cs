@@ -24,7 +24,9 @@ namespace DeveMultiCompressor
         public IEnumerable<Compressor> GetCompressors()
         {
             var allCompressors = new List<Compressor>();
-            var allCompressorDirectories = Directory.GetDirectories(Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, _compressorDirectoryConfiguration.CompressorDirectory));
+            var compressorRootDir = Path.Combine(FolderHelperMethods.AssemblyDirectory.Value, _compressorDirectoryConfiguration.CompressorDirectory);
+            _logger.Write($"Looking for compressors in: {compressorRootDir}");
+            var allCompressorDirectories = Directory.GetDirectories(compressorRootDir);
 
             foreach (var compressorDir in allCompressorDirectories)
             {
