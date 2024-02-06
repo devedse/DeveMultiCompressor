@@ -2,7 +2,7 @@
   "profiles": {
     "DeveMultiCompressor": {
       "commandName": "Project",
-      "commandLineArgs": "-i C:\\XGitPrivate\\DeveMultiCompressor\\DeveMultiCompressor.Tests\\TestFiles\\enwik4.txt -v --include paq8px206fix1"
+      "commandLineArgs": "-i C:\\XGitPrivate\\DeveMultiCompressor\\DeveMultiCompressor.Tests\\TestFiles\\enwik4.txt -v"
     }
   }
 }
