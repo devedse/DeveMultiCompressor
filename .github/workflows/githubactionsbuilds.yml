@@ -181,7 +181,7 @@ jobs:
     - name: Pack
       run: dotnet pack DeveMultiCompressor\DeveMultiCompressor.csproj --verbosity normal --no-build -c Release /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: Run CodeCov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         directory: ./DeveMultiCompressor.Tests/TestResults
         fail_ci_if_error: true # optional (default = false)
