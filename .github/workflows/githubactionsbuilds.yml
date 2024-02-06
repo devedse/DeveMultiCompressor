@@ -115,7 +115,7 @@ jobs:
         mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/linux-x64/publishtrimmedaot/DeveMultiCompressor.ConsoleApp ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.TrimmedAot
     - uses: actions/upload-artifact@v4
       with:
-        name: DeveMultiCompressor.ConsoleApp
+        name: DeveMultiCompressor.ConsoleApp.Linux
         path: BuildOutputConsole/*
 
   build_windows_consoleapp:
@@ -142,7 +142,7 @@ jobs:
         mv ./DeveMultiCompressor.ConsoleApp/bin/Release/net8.0/win-x64/publishtrimmedaot/DeveMultiCompressor.ConsoleApp.exe ./BuildOutputConsole/DeveMultiCompressor.ConsoleApp.TrimmedAot.exe
     - uses: actions/upload-artifact@v4
       with:
-        name: DeveMultiCompressor.ConsoleApp
+        name: DeveMultiCompressor.ConsoleApp.Windows
         path: BuildOutputConsole/*.exe
 
   build_windows:
