@@ -29,6 +29,11 @@ namespace DeveMultiCompressor
             foreach (var compressorDir in allCompressorDirectories)
             {
                 var configPath = Path.Combine(compressorDir, Constants.CompressorConfigFileName);
+                if (!File.Exists(configPath))
+                {
+                    _logger.Write($"No config file found for compressor in directory {compressorDir}, skipping...");
+                    continue;
+                }
                 var configs = JsonSerializer.Deserialize<List<CompressorConfig>>(File.ReadAllText(configPath));
 
                 foreach (var config in configs)
