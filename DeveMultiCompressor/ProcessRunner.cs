@@ -1,9 +1,7 @@
 ﻿using DeveMultiCompressor.Lib.Logging;
-using DryIoc;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace DeveMultiCompressor.Lib
 {

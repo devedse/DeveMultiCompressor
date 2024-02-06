@@ -1,8 +1,8 @@
 ﻿using DeveMultiCompressor.Lib.Config;
 using DeveMultiCompressor.Lib.Logging;
+using DryIoc;
 using System;
 using System.Linq;
-using DryIoc;
 
 namespace DeveMultiCompressor.Lib
 {
