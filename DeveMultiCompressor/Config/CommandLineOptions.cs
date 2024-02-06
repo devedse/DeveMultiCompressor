@@ -17,10 +17,10 @@ namespace DeveMultiCompressor.Config
         [Option('v', "verify", HelpText = "Unpacks the archive afterwards and compares the recreated file hash with the input file. (Only for compressing).")]
         public bool Verify { get; set; }
 
-        [Option("include", HelpText = "Included compressors (List of archive extensions seperated by a comma, e.g.: nz,7z,zpaq).", Separator = ',')]
+        [Option("include", HelpText = "Included compressors (List of archive extensions seperated by a comma, e.g.: nz,7z,zpaq or Tags, e.g.: fast).", Separator = ',')]
         public IEnumerable<string> IncludedCompressors { get; set; }
 
-        [Option("exclude", HelpText = "Excluded compressors (List of archive extensions seperated by a comma, e.g.: nz,7z,zpaq).", Separator = ',')]
+        [Option("exclude", HelpText = "Excluded compressors (List of archive extensions seperated by a comma, e.g.: nz,7z,zpaq or Tags, e.g.: slow,medium).", Separator = ',')]
         public IEnumerable<string> ExcludedCompressors { get; set; }
     }
 }

@@ -36,11 +36,17 @@ namespace DeveMultiCompressor
 
             if (options.IncludedCompressors != null && options.IncludedCompressors.Any())
             {
-                allCompressors = allCompressors.Where(t => options.IncludedCompressors.Any(z => z.Equals(t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase))).ToList();
+                allCompressors = allCompressors.Where(t => options.IncludedCompressors.Any(z =>
+                    z.Equals(t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase) || 
+                    t.CompressorConfig.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries).Any(c => c.Equals(z, StringComparison.OrdinalIgnoreCase)))
+                ).ToList();
             }
             if (options.ExcludedCompressors != null && options.ExcludedCompressors.Any())
             {
-                allCompressors = allCompressors.Where(t => options.ExcludedCompressors.All(z => !z.Equals(t.CompressorConfig.CompressedFileExtension))).ToList();
+                allCompressors = allCompressors.Where(t => options.ExcludedCompressors.All(z => 
+                    !z.Equals(t.CompressorConfig.CompressedFileExtension) && 
+                    t.CompressorConfig.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries).Any(c => !c.Equals(z, StringComparison.OrdinalIgnoreCase)))
+                ).ToList();
             }
 
             var inputFile = new CompressorFileInfo(inputFileFullPath);

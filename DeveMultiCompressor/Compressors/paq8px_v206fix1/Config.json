@@ -5,6 +5,7 @@
     "CompressedOutputFile": "{inputfilewithextension}.paq8px206fix1",
     "DecompressArguments": "-d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
     "CompressedFileExtension": "paq8px206fix1",
-    "Description": "paq8px206fix1 (-12LT)"
+    "Description": "paq8px206fix1 (-12LT)",
+    "Tags": "slow"
   }
 ]

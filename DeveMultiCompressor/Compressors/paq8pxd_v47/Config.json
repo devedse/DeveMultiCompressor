@@ -5,6 +5,7 @@
     "CompressedOutputFile": "{inputfilewithoutextension}.paq8pxd47",
     "DecompressArguments": "-d \"{inputfilepath}\"",
     "CompressedFileExtension": "paq8pxd47",
-    "Description": "paq8pxd_v47 (-s11)"
+    "Description": "paq8pxd_v47 (-s11)",
+    "Tags": "slow"
   }
 ]

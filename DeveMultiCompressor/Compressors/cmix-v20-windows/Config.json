@@ -5,6 +5,7 @@
     "CompressedOutputFile": "{inputfilewithextension}.cmix20",
     "DecompressArguments": "-d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
     "CompressedFileExtension": "cmix20",
-    "Description": "cmix20"
+    "Description": "cmix20",
+    "Tags": "slow"
   }
 ]

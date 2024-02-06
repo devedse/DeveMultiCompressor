@@ -2,7 +2,7 @@
   "profiles": {
     "DeveMultiCompressor": {
       "commandName": "Project",
-      "commandLineArgs": "-i C:\\XGitPrivate\\DeveMultiCompressor\\DeveMultiCompressor.Tests\\TestFiles\\enwik4.txt -v"
+      "commandLineArgs": "-i C:\\XGitPrivate\\DeveMultiCompressor\\DeveMultiCompressor.Tests\\TestFiles\\enwik6.txt -v --exclude slow"
     }
   }
 }

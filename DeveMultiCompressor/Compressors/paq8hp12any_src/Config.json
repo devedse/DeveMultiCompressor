@@ -5,6 +5,7 @@
     "CompressedOutputFile": "{inputfilewithextension}.paq8hp12",
     "DecompressArguments": "\"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
     "CompressedFileExtension": "paq8hp12",
-    "Description": "paq8hp12 (-8)"
+    "Description": "paq8hp12 (-8)",
+    "Tags": "slow"
   }
 ]

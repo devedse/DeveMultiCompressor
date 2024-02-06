@@ -5,6 +5,7 @@
     "CompressedOutputFile": "{inputfilewithoutextension}.rz",
     "DecompressArguments": "e \"{inputfilepath}\" *",
     "CompressedFileExtension": "rz",
-    "Description": "rz"
+    "Description": "rz",
+    "Tags": "fast"
   }
 ]

@@ -5,6 +5,7 @@
     "CompressedOutputFile": "{inputfilewithextension}.bsc",
     "DecompressArguments": "d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
     "CompressedFileExtension": "bsc",
-    "Description": "bsc"
+    "Description": "bsc",
+    "Tags": "fast"
   }
 ]

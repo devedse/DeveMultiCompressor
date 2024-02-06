@@ -8,5 +8,6 @@
         public string DecompressArguments { get; set; }
         public string CompressedFileExtension { get; set; }
         public string Description { get; set; }
+        public string Tags { get; set; }
     }
 }

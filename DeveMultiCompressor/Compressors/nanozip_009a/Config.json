@@ -5,6 +5,7 @@
     "CompressedOutputFile": "{inputfilewithoutextension}.nz",
     "DecompressArguments": "x \"{inputfilepath}\"",
     "CompressedFileExtension": "nz",
-    "Description": "NanoZip (-cc)"
+    "Description": "NanoZip (-cc)",
+    "Tags": "medium"
   }
 ]

@@ -5,7 +5,8 @@
     "CompressedOutputFile": "{inputfilewithoutextension}_LZMA2.7z",
     "DecompressArguments": "e \"{inputfilepath}\"",
     "CompressedFileExtension": "7z",
-    "Description": "7z (LZMA2)"
+    "Description": "7z (LZMA2)",
+    "Tags": "fast"
   },
   {
     "CompressorExe": "7za.exe",
@@ -13,6 +14,7 @@
     "CompressedOutputFile": "{inputfilewithoutextension}_LZMA.7z",
     "DecompressArguments": "e \"{inputfilepath}\"",
     "CompressedFileExtension": "7z",
-    "Description": "7z (LZMA)"
+    "Description": "7z (LZMA)",
+    "Tags": "fast"
   }
 ]
