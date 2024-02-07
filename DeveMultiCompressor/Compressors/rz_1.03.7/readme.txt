@@ -61,3 +61,7 @@ RZ 1.03.6 (11.03.2018)
 	-added @list support for extraction
 	-fixed @list bug
 	-added option to force header-scanning
+
+RZ 1.03.7 (22.03.2018)
+	-added very long path support (~4K chars)
+	-flush stdout on progress update

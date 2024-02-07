@@ -1,4 +1,5 @@
-﻿using DeveMultiCompressor.Logging;
+﻿using DeveMultiCompressor.Config;
+using DeveMultiCompressor.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -14,24 +15,24 @@ namespace DeveMultiCompressor
             _logger = logger;
         }
 
-        public void RunProcess(string directoryToRunFrom, string pathToExe, string arguments)
+        public void RunProcess(string directoryToRunFrom, ProcessRunInfo processRunInfo, string arguments)
         {
             Directory.SetCurrentDirectory(directoryToRunFrom);
 
-            _logger.Write($"Running command: {pathToExe} {arguments}");
-
             ProcessStartInfo psi;
 
-            if (OperatingSystem.IsWindows())
+            if (!processRunInfo.ShouldUseWine)
             {
-                psi = new ProcessStartInfo(pathToExe, arguments)
+                _logger.Write($"Running command: {processRunInfo.ExecutableFullPath} {arguments}");
+                psi = new ProcessStartInfo(processRunInfo.ExecutableFullPath, arguments)
                 {
                     //WorkingDirectory = Path.GetDirectoryName(_toolExePath)
                 };
             }
             else
             {
-                psi = new ProcessStartInfo("wine", $"\"{pathToExe}\" {arguments}")
+                _logger.Write($"Running command: wine \"{processRunInfo.ExecutableFullPath}\" {arguments}");
+                psi = new ProcessStartInfo("wine", $"\"{processRunInfo.ExecutableFullPath}\" {arguments}")
                 {
                     //If you use a working directory, paths in Linux with wine don't work anymore
                     //WorkingDirectory = Path.GetDirectoryName(_toolExePath)

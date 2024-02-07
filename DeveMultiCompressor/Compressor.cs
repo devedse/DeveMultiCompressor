@@ -14,6 +14,7 @@ namespace DeveMultiCompressor
         private readonly ILogger _logger;
         private readonly ConfigStringFiller _configStringFiller;
         private readonly ProcessRunner _processRunner;
+        private readonly ProcessRunInfo _processRunInfo;
 
         public Compressor(ILogger logger, ConfigStringFiller configStringFiller, ProcessRunner processRunner, string compressorDir, CompressorConfig compressorConfig)
         {
@@ -22,11 +23,12 @@ namespace DeveMultiCompressor
             _processRunner = processRunner;
             CompressorDir = compressorDir;
             CompressorConfig = compressorConfig;
+            _processRunInfo = new ProcessRunInfo(CompressorDir, CompressorConfig);
         }
 
         public CompressionResult CompressFile(CompressorFileInfo input)
         {
-            _logger.Write($"Compressing with {CompressorConfig.CompressorExe}");
+            _logger.Write($"Compressing with {_processRunInfo}");
 
             var outputFilePath = _configStringFiller.FillString(CompressorConfig.CompressedOutputFile, input);
             var outputFileTotalPath = Path.Combine(CompressorDir, outputFilePath);
@@ -38,7 +40,7 @@ namespace DeveMultiCompressor
 
             var arguments = _configStringFiller.FillString(CompressorConfig.CompressorArguments, input);
             var w = Stopwatch.StartNew();
-            _processRunner.RunProcess(CompressorDir, CompressorConfig.CompressorExe, arguments);
+            _processRunner.RunProcess(CompressorDir, _processRunInfo, arguments);
             w.Stop();
 
             var compressedFile = new CompressorFileInfo(outputFileTotalPath);
@@ -49,7 +51,7 @@ namespace DeveMultiCompressor
 
         public CompressorFileInfo DecompressFile(CompressorFileInfo inputFile, string expectedOutputFilePath)
         {
-            _logger.Write($"Extracting with {CompressorConfig.CompressorExe}");
+            _logger.Write($"Extracting with {_processRunInfo}");
 
             if (File.Exists(expectedOutputFilePath))
             {
@@ -57,14 +59,14 @@ namespace DeveMultiCompressor
             }
 
             var arguments = _configStringFiller.FillString(CompressorConfig.DecompressArguments, inputFile);
-            _processRunner.RunProcess(CompressorDir, CompressorConfig.CompressorExe, arguments);
+            _processRunner.RunProcess(CompressorDir, _processRunInfo, arguments);
 
             return new CompressorFileInfo(expectedOutputFilePath);
         }
 
         public void DecompressFileToDir(CompressorFileInfo inputFile, string outputDir)
         {
-            _logger.Write($"Extracting with {CompressorConfig.CompressorExe}");
+            _logger.Write($"Extracting to dir with {_processRunInfo}");
 
             if (Directory.Exists(outputDir))
             {
@@ -79,7 +81,7 @@ namespace DeveMultiCompressor
 
             var totalCompressorExe = Path.Combine(CompressorDir, CompressorConfig.CompressorExe);
             var arguments = _configStringFiller.FillStringToFullPath(CompressorConfig.DecompressArguments, inputFileInOutputDir);
-            _processRunner.RunProcess(outputDir, totalCompressorExe, arguments);
+            _processRunner.RunProcess(outputDir, _processRunInfo, arguments);
 
             inputFileInOutputDir.Delete();
         }

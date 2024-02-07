@@ -1,6 +1,7 @@
 [
   {
     "CompressorExe": "paq8hp12.exe",
+    "CompressorLinuxExe": "paq8hp12_l64",
     "CompressorArguments": "-8 \"{inputfilewithextension}.paq8hp12\" \"{inputfilepath}\"",
     "CompressedOutputFile": "{inputfilewithextension}.paq8hp12",
     "DecompressArguments": "\"{inputfilepath}\" \"{inputfilewithonelessextension}\"",

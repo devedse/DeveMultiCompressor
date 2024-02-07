@@ -3,6 +3,7 @@
     public class CompressorConfig
     {
         public string CompressorExe { get; set; }
+        public string CompressorLinuxExe { get; set; }
         public string CompressorArguments { get; set; }
         public string CompressedOutputFile { get; set; }
         public string DecompressArguments { get; set; }
