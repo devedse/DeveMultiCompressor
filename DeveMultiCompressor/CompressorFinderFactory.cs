@@ -33,7 +33,7 @@ namespace DeveMultiCompressor
                 var configPath = Path.Combine(compressorDir, Constants.CompressorConfigFileName);
                 if (!File.Exists(configPath))
                 {
-                    _logger.Write($"No config file found for compressor in directory {compressorDir}, skipping...");
+                    _logger.Write($"No config file found for compressor in directory {compressorDir}, skipping...", LogLevel.Warning, System.ConsoleColor.Yellow);
                     continue;
                 }
                 var configs = JsonSerializer.Deserialize<List<CompressorConfig>>(File.ReadAllText(configPath));
