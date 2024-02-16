@@ -1,0 +1,11 @@
+[
+  {
+    "CompressorLinuxExe": "nncp",
+    "CompressorArguments": "c \"{inputfilepath}\" \"{inputfilewithextension}.nncp\"",
+    "CompressedOutputFile": "{inputfilewithextension}.nncp",
+    "DecompressArguments": "d \"{inputfilepath}\" \"{inputfilewithonelessextension}\"",
+    "CompressedFileExtension": "nncp",
+    "Description": "Nncp (default)",
+    "Tags": "slow"
+  }
+]

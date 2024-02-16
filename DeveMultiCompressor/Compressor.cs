@@ -85,5 +85,10 @@ namespace DeveMultiCompressor
 
             inputFileInOutputDir.Delete();
         }
+
+        public override string ToString()
+        {
+            return $"{CompressorConfig.Description} ({CompressorConfig.CompressedFileExtension})";
+        }
     }
 }

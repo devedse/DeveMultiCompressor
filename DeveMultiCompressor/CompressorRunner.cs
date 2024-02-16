@@ -37,16 +37,33 @@ namespace DeveMultiCompressor
             if (options.IncludedCompressors != null && options.IncludedCompressors.Any())
             {
                 allCompressors = allCompressors.Where(t => options.IncludedCompressors.Any(z =>
-                    z.Equals(t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase) || 
+                    z.Equals(t.CompressorConfig.CompressedFileExtension, StringComparison.OrdinalIgnoreCase) ||
+                    t.CompressorConfig.Tags != null &&
                     t.CompressorConfig.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries).Any(c => c.Equals(z, StringComparison.OrdinalIgnoreCase)))
                 ).ToList();
             }
             if (options.ExcludedCompressors != null && options.ExcludedCompressors.Any())
             {
-                allCompressors = allCompressors.Where(t => options.ExcludedCompressors.All(z => 
-                    !z.Equals(t.CompressorConfig.CompressedFileExtension) && 
+                allCompressors = allCompressors.Where(t => options.ExcludedCompressors.All(z =>
+                    !z.Equals(t.CompressorConfig.CompressedFileExtension) &&
+                    t.CompressorConfig.Tags == null ||
                     t.CompressorConfig.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries).Any(c => !c.Equals(z, StringComparison.OrdinalIgnoreCase)))
                 ).ToList();
+            }
+
+            //If we're running on Windows we skip all Compressors without a CompressorExe and log these
+            if (OperatingSystem.IsWindows())
+            {
+                var allCompressorsWithoutExe = allCompressors.Where(t => string.IsNullOrWhiteSpace(t.CompressorConfig.CompressorExe)).ToList();
+                if (allCompressorsWithoutExe.Any())
+                {
+                    _logger.Write($"Skipping {allCompressorsWithoutExe.Count} compressors because these can't run on Windows (Linux only). (Ensure CompressorExe is configured if this can run on Windows)", LogLevel.Warning, ConsoleColor.Yellow);
+                    foreach (var compressorWithoutExe in allCompressorsWithoutExe)
+                    {
+                        _logger.Write($"Skipping {compressorWithoutExe.CompressorConfig.Description}", LogLevel.Warning, ConsoleColor.Yellow);
+                    }
+                }
+                allCompressors = allCompressors.Except(allCompressorsWithoutExe).ToList();
             }
 
             var inputFile = new CompressorFileInfo(inputFileFullPath);
