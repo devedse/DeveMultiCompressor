@@ -76,7 +76,7 @@ jobs:
       run: |
         pwd
         ls
-        cd /home/runner/work/DeveMultiCompressor/DeveMultiCompressor/Compressors/paq8hp12any_src
+        cd /home/runner/work/DeveMultiCompressor/DeveMultiCompressor/DeveMultiCompressor/Compressors/paq8hp12any_src
         ./paq8hp12_l64 -8 blah.paq8hp12 readme.txt
         find .
     - name: Install wine
