@@ -79,6 +79,9 @@ jobs:
         cd /home/runner/work/DeveMultiCompressor/DeveMultiCompressor/DeveMultiCompressor/Compressors/paq8hp12any_src
         ./paq8hp12_l64 -8 blah.paq8hp12 readme.txt
         find .
+    - name: chmod +x all executable files
+      run: |
+        find . -type f ! -name "*.*" -exec sh -c 'for f; do file --mime-type "$f" | grep -q "x-empty\|binary" && chmod +x "$f"; done' _ {} +
     - name: Install wine
       run: |
         ## Ubuntu
