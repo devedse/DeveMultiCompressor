@@ -72,9 +72,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: chmod +x all executable files
+    - name: Make files executable based on MIME type
       run: |
-        find . -type f ! -name "*.*" -exec sh -c 'for f; do file --mime-type "$f" | grep -q "x-empty\|binary" && chmod +x "$f"; done' _ {} +
+        find . -type f ! -name "*.*" -exec sh -c 'for f; do file --mime-type "$f" | grep -q "x-empty\\|binary" && chmod +x "$f"; done' sh {} +
     - name: Run paq8hp12_l64 as a test
       run: |
         pwd
