@@ -166,13 +166,13 @@ namespace DeveMultiCompressor
                     }
                     else
                     {
-                        _logger.WriteError($"Compression failed for {compressor.CompressorConfig.Description}. Output file {outputFile.FullPath} not found");
+                        _logger.WriteError($"Compression failed for {compressor.CompressorConfig.Description}. Success was false.");
                     }
-
                 }
                 catch (Exception ex)
                 {
-                    _logger.WriteError($"Error occured when compressing with {compressor.CompressorDir}. Error: {ex.ToString()}");
+                    //Ideally we should never get here, but if we do, we should log it and continue with the next compressor
+                    _logger.WriteError($"Unexpected exception occured when compressing with {compressor.CompressorDir}. Error: {ex}");
                 }
             }
 

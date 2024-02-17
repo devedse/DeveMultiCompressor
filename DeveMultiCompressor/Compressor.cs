@@ -1,6 +1,7 @@
 ﻿using DeveMultiCompressor.Compression;
 using DeveMultiCompressor.Config;
 using DeveMultiCompressor.Logging;
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -40,11 +41,19 @@ namespace DeveMultiCompressor
 
             var arguments = _configStringFiller.FillString(CompressorConfig.CompressorArguments, input);
             var w = Stopwatch.StartNew();
-            _processRunner.RunProcess(CompressorDir, _processRunInfo, arguments);
+            bool success = false;
+            try
+            {
+                _processRunner.RunProcess(CompressorDir, _processRunInfo, arguments);
+                success = File.Exists(outputFileTotalPath);
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError($"Error occured when compressing with {this.CompressorDir}. Error: {ex}");
+            }
             w.Stop();
 
             var compressedFile = new CompressorFileInfo(outputFileTotalPath);
-            var success = File.Exists(outputFileTotalPath);
             var result = new CompressionResult(success, compressedFile, this, w.Elapsed, input.FileSize, success ? compressedFile.FileSize : input.FileSize);
             return result;
         }
