@@ -72,6 +72,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Run paq8hp12_l64 as a test
+      run: |
+        cd /home/runner/work/DeveMultiCompressor/DeveMultiCompressor/Compressors/paq8hp12any_src
+        ./paq8hp12_l64 -8 blah.paq8hp12 readme.txt
+        find .
     - name: Install wine
       run: |
         ## Ubuntu
