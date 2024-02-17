@@ -88,15 +88,6 @@ jobs:
             fi
           done
         ' sh {} +
-
-
-    - name: Prepare for running paq8hp12_l64
-      run: |
-        echo "Preparing to run paq8hp12_l64..."
-        pwd
-        ls
-        cd /home/runner/work/DeveMultiCompressor/DeveMultiCompressor/DeveMultiCompressor/Compressors/paq8hp12any_src
-        ls -lah
     - name: Install wine
       run: |
         ## Ubuntu
@@ -113,10 +104,6 @@ jobs:
       run: dotnet restore DeveMultiCompressor.sln
     - name: Build
       run: dotnet build DeveMultiCompressor.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
-    - name: List all files
-      run: ls -R
-    - name: Find all files
-      run: find .
     - name: Test
       run: dotnet test DeveMultiCompressor.sln -c Release --no-restore --verbosity normal
   
