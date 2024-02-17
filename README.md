@@ -20,6 +20,25 @@ See the sample #SampleCompressEnwik6.cmd in downloaded package for a sample comm
 
 The output (created archives) will be written to a folder named "Output".
 
+After the compression is done the tool will show the following results to exactly show the statistics of the different compressors used:
+
+|   Extension   |      Description      | Success |    Duration     | Original File Size | Compressed File Size | Compressed File Size (Bytes) | Verification Status | Decompression time |
+| ------------- | --------------------- | ------- | --------------- | ------------------ | -------------------- | ---------------------------- | ------------------- | ------------------ |
+| paq8px208fix1 | paq8px208fix1 (-12LT) |  True   |   9.8 Minutes   |        1MB         |       261.9KB        |            268161            |       Success       |    9.8 Minutes     |
+| paq8px206fix1 | paq8px206fix1 (-12LT) |  True   |   9.9 Minutes   |        1MB         |        262KB         |            268329            |       Success       |    10.1 Minutes    |
+|    cmix20     |        cmix20         |  True   |  28.5 Minutes   |        1MB         |       262.2KB        |            268492            |       Success       |    28.7 Minutes    |
+|   paq8pxd47   |  paq8pxd_v47 (-s11)   |  True   |   1.6 Minutes   |        1MB         |       272.2KB        |            278742            |       Success       |    1.6 Minutes     |
+|   paq8pxd18   |  paq8pxd_v18 (-s11)   |  True   |   1.1 Minutes   |        1MB         |       272.8KB        |            279387            |       Success       |      1 Minute      |
+|   paq8hp12    |     paq8hp12 (-8)     |  True   |   50 Seconds    |        1MB         |       289.6KB        |            296532            |       Success       |     49 Seconds     |
+|      nz       |     NanoZip (-cc)     |  True   | 712 Miliseconds |        1MB         |       295.8KB        |            302936            |       Success       |  715 Miliseconds   |
+|     zpaq      |      zpaq (-m5)       |  True   |    2 Seconds    |        1MB         |       303.7KB        |            310947            |       Success       |      1 Second      |
+|      mcm      |          mcm          |  True   |    9 Seconds    |        1MB         |       307.5KB        |            314885            |       Success       |     3 Seconds      |
+|      rz       |          rz           |  True   |    1 Second     |        1MB         |       315.3KB        |            322839            |       Success       |  241 Miliseconds   |
+|      7z       |       7z (LZMA)       |  True   | 363 Miliseconds |        1MB         |       322.9KB        |            330631            |       Success       |  353 Miliseconds   |
+|      7z       |      7z (LZMA2)       |  True   | 742 Miliseconds |        1MB         |        323KB         |            330712            |       Success       |  356 Miliseconds   |
+|      bsc      |          bsc          |  True   | 533 Miliseconds |        1MB         |       359.4KB        |            367990            |       Success       |  426 Miliseconds   |
+|     nncp      |    Nncp (default)     |  True   |   4.2 Minutes   |        1MB         |       372.5KB        |            381416            |       Success       |    4.4 Minutes     |
+
 ## Download
 
 The latest version is automatically build from the sources and can be found on the releases page:
