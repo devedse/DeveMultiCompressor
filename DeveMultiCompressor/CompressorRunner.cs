@@ -252,7 +252,7 @@ namespace DeveMultiCompressor
                 theLogList.Add(preCompCompressionResult.ToStringList());
                 theLogList.Add(null);
             }
-            theLogList.AddRange(otherCompressionResults.OrderBy(t => t.CompressedFileSize).Select(t => t.ToStringList()));
+            theLogList.AddRange(otherCompressionResults.OrderByDescending(t => t.VerificationStatus).ThenBy(t => t.CompressedFileSize).Select(t => t.ToStringList()));
 
             var outputString = TableToTextPrinter.TableToText(theLogList);
             sb.AppendLine(outputString);
