@@ -20,7 +20,9 @@ See the sample #SampleCompressEnwik6.cmd in downloaded package for a sample comm
 
 The output (created archives) will be written to a folder named "Output".
 
-After the compression is done the tool will show the following results to exactly show the statistics of the different compressors used:
+After the compression is done the tool will show the statistics on all the compressors used.
+
+Here's an example for `Pokemon Red.gb`:
 
 |   Extension   |      Description      | Success |    Duration     | Original File Size | Compressed File Size | Compressed File Size (Bytes) | Verification Status | Decompression time |
 | ------------- | --------------------- | ------- | --------------- | ------------------ | -------------------- | ---------------------------- | ------------------- | ------------------ |
