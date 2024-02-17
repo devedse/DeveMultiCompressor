@@ -88,12 +88,8 @@ jobs:
       run: dotnet restore DeveMultiCompressor.sln
     - name: Build
       run: dotnet build DeveMultiCompressor.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
-    - name: List all files
-      run: ls -R
-    - name: Find all files
-      run: find .
     - name: Test
-      run: dotnet test DeveMultiCompressor.sln --no-restore --verbosity normal
+      run: dotnet test DeveMultiCompressor.sln -c Release --no-restore --verbosity normal
   
   build_linux_consoleapp:
     needs: generate_version_number
@@ -176,7 +172,7 @@ jobs:
     - name: Build
       run: dotnet build DeveMultiCompressor.sln -c Release --no-restore /p:Version=1.0.${{needs.generate_version_number.outputs.build_number}}
     - name: Test
-      run: dotnet test DeveMultiCompressor.sln --verbosity normal --no-build -c Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover
+      run: dotnet test DeveMultiCompressor.sln -c Release --verbosity normal --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura,opencover
     - name: SonarQube end
       if: github.actor != 'dependabot[bot]'
       env:
