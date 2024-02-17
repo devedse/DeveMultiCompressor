@@ -72,16 +72,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Make files executable based on MIME type
+    - name: List all files (for debugging)
+      run: ls -lah
+
+    - name: Check for files without extension
       run: |
-        find . -type f ! -name "*.*" -exec sh -c 'for f; do file --mime-type "$f" | grep -q "x-empty\\|binary" && chmod +x "$f"; done' sh {} +
-    - name: Run paq8hp12_l64 as a test
+        echo "Listing files without extension..."
+        files=$(find . -type f ! -name "*.*")
+        if [ -z "$files" ]; then
+          echo "No files without extension found."
+        else
+          echo "Files without extension found:"
+          echo "$files"
+        fi
+
+    - name: Debugging MIME types of files without extension
       run: |
+        echo "Checking MIME types for files without extension..."
+        find . -type f ! -name "*.*" -exec sh -c 'for f; do echo "$f"; file --mime-type "$f"; done' sh {} +
+
+    - name: Making files without extension executable if binary or empty
+      run: |
+        echo "Attempting to make binary or empty files without extension executable..."
+        find . -type f ! -name "*.*" -exec sh -c 'for f; do file --mime-type "$f" | grep -q "x-empty\\|binary" && echo "Making $f executable" && chmod +x "$f"; done' sh {} +
+
+    - name: Verify execution permission of files without extension
+      run: |
+        echo "Verifying execution permissions for files without extension..."
+        find . -type f ! -name "*.*" -exec ls -l {} +
+
+    - name: Prepare for running paq8hp12_l64
+      run: |
+        echo "Preparing to run paq8hp12_l64..."
         pwd
         ls
         cd /home/runner/work/DeveMultiCompressor/DeveMultiCompressor/DeveMultiCompressor/Compressors/paq8hp12any_src
-        ./paq8hp12_l64 -8 blah.paq8hp12 readme.txt
-        find .
+        ls -lah
     - name: Install wine
       run: |
         ## Ubuntu
