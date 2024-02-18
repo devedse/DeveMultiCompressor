@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
-    <PackageReference Include="DeveCoolLib" Version="1.0.571" />
+    <PackageReference Include="DeveCoolLib" Version="1.0.574" />
     <PackageReference Include="DryIoc.dll" Version="5.4.3" />
   </ItemGroup>
 
