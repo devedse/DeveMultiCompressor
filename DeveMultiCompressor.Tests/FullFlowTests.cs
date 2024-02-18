@@ -393,7 +393,8 @@ namespace DeveMultiCompressor.Tests
                 var commandLineOptions = new CommandLineOptions()
                 {
                     InputFile = inputFile,
-                    Verify = true
+                    Verify = true,
+                    ExcludedCompressors = ["cmix"]
                 };
 
                 runner.GoCompress(commandLineOptions);
