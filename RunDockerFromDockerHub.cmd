@@ -1,2 +1,2 @@
 docker pull devedse/devemulticompressorconsoleapp:latest
-docker run --rm -it -v %cd%/DeveMultiCompressor.Tests/TestFiles:/testfiles devedse/devemulticompressorconsoleapp:latest -i /testfiles/enwik5.txt -v
+docker run --rm -it -v %cd%/DeveMultiCompressor.Tests/TestFiles:/testfiles devedse/devemulticompressorconsoleapp:latest -i "/testfiles/enwik5.txt" -v
