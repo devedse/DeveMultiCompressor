@@ -10,21 +10,27 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj", "DeveMultiCompressor.ConsoleApp/"]
-COPY ["DeveMultiCompressor/DeveMultiCompressor.csproj", "DeveMultiCompressor/"]
-RUN dotnet restore "DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj"
-COPY . .
+# Copy compressors folder first
+COPY ["DeveMultiCompressor/Compressors", "DeveMultiCompressor/Compressors"]
 # Make executable files without extension executable
-WORKDIR "/src/Compressors"
+WORKDIR "/src/DeveMultiCompressor/Compressors"
+RUN apt-get update && apt-get install -y file
 RUN echo "Making executable files without extension executable..." && \
     find . -type f ! -name "*.*" -exec sh -c '\
         for f; do \
             mime=$(file --mime-type "$f" | cut -d " " -f2); \
             if [ "$mime" = "application/x-pie-executable" ] || [ "$mime" = "application/x-executable" ]; then \
+                echo "cmhod +x $f"; \
                 chmod +x "$f"; \
             fi; \
         done \
     ' sh {} +
+
+WORKDIR /src
+COPY ["DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj", "DeveMultiCompressor.ConsoleApp/"]
+COPY ["DeveMultiCompressor/DeveMultiCompressor.csproj", "DeveMultiCompressor/"]
+RUN dotnet restore "DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj"
+COPY . .
 WORKDIR "/src/DeveMultiCompressor.ConsoleApp"
 RUN dotnet build "DeveMultiCompressor.ConsoleApp.csproj" -c Release -o /app/build
 
