@@ -14,9 +14,8 @@ COPY ["DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj", "D
 COPY ["DeveMultiCompressor/DeveMultiCompressor.csproj", "DeveMultiCompressor/"]
 RUN dotnet restore "DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj"
 COPY . .
-WORKDIR "/src/DeveMultiCompressor.ConsoleApp"
-
 # Make executable files without extension executable
+WORKDIR "/src/Compressors"
 RUN echo "Making executable files without extension executable..." && \
     find . -type f ! -name "*.*" -exec sh -c '\
         for f; do \
@@ -26,7 +25,7 @@ RUN echo "Making executable files without extension executable..." && \
             fi; \
         done \
     ' sh {} +
-
+WORKDIR "/src/DeveMultiCompressor.ConsoleApp"
 RUN dotnet build "DeveMultiCompressor.ConsoleApp.csproj" -c Release -o /app/build
 
 FROM build AS publish
