@@ -63,8 +63,7 @@ Important note: additional exe's + dll's included in the Release/GIT repository 
 
 | Docker Hub |
 |:----------:|
-| [![Docker pulls](https://img.shields.io/docker/v/devedse/devemulticompressorweb)](https://hub.docker.com/r/devedse/devemulticompressorweb/) |
-| [![Docker pulls](https://img.shields.io/docker/v/devedse/devemulticompressormonogameblazor)](https://hub.docker.com/r/devedse/devemulticompressormonogameblazor/) |
+| [![Docker pulls](https://img.shields.io/docker/v/devedse/devemulticompressorconsoleapp)](https://hub.docker.com/r/devedse/devemulticompressorconsoleapp/) |
 
 ## Code Coverage Status
 
