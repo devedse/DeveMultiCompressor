@@ -25,4 +25,14 @@ RUN dotnet publish "DeveMultiCompressor.ConsoleApp.csproj" -c Release -o /app/pu
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+# Make executable files without extension executable
+RUN echo "Making executable files without extension executable..." && \
+    find . -type f ! -name "*.*" -exec sh -c '\
+        for f; do \
+            mime=$(file --mime-type "$f" | cut -d " " -f2); \
+            if [ "$mime" = "application/x-pie-executable" ] || [ "$mime" = "application/x-executable" ]; then \
+                chmod +x "$f"; \
+            fi; \
+        done \
+    ' sh {} +
 ENTRYPOINT ["dotnet", "DeveMultiCompressor.ConsoleApp.dll"]
