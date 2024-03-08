@@ -10,8 +10,10 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-# Copy compressors folder first
-COPY ["DeveMultiCompressor/Compressors", "DeveMultiCompressor/Compressors"]
+COPY ["DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj", "DeveMultiCompressor.ConsoleApp/"]
+COPY ["DeveMultiCompressor/DeveMultiCompressor.csproj", "DeveMultiCompressor/"]
+RUN dotnet restore "DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj"
+COPY . .
 # Make executable files without extension executable
 WORKDIR "/src/DeveMultiCompressor/Compressors"
 RUN apt-get update && apt-get install -y file
@@ -25,12 +27,6 @@ RUN echo "Making executable files without extension executable..." && \
             fi; \
         done \
     ' sh {} +
-
-WORKDIR /src
-COPY ["DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj", "DeveMultiCompressor.ConsoleApp/"]
-COPY ["DeveMultiCompressor/DeveMultiCompressor.csproj", "DeveMultiCompressor/"]
-RUN dotnet restore "DeveMultiCompressor.ConsoleApp/DeveMultiCompressor.ConsoleApp.csproj"
-COPY . .
 WORKDIR "/src/DeveMultiCompressor.ConsoleApp"
 RUN dotnet build "DeveMultiCompressor.ConsoleApp.csproj" -c Release -o /app/build
 
